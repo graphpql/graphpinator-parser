@@ -1,0 +1,23 @@
+{
+    "source": {
+        "directories": [
+            "src"
+        ]
+    },
+    "timeout": 30,
+    "logs": {
+        "text": "build/infection.log",
+        "summary": "build/summary.log",
+        "perMutator": "build/per-mutator.md"
+    },
+    "tmpDir": "/tmp/infection",
+    "minMsi": 95,
+    "minCoveredMsi": 95,
+    "mutators": {
+        "@default": true,
+        "global-ignoreSourceCodeByRegex": [
+            "\\\\assert\\(.*\\);"
+        ]
+    },
+    "testFramework":"phpunit"
+}
