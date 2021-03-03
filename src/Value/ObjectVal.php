@@ -21,7 +21,7 @@ final class ObjectVal implements \Graphpinator\Parser\Value\Value
     {
         $return = new \stdClass();
 
-        foreach ($this->value as $key => $value) {
+        foreach ((array) $this->value as $key => $value) {
             \assert($value instanceof Value);
 
             $return->{$key} = $value->getRawValue();

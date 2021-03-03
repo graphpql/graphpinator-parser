@@ -350,8 +350,6 @@ final class Parser
      *
      * Expects iterator on previous token
      * Leaves iterator to last used token - closing parenthesis
-     *
-     * @param string $location
      */
     private function parseDirectives() : \Graphpinator\Parser\Directive\DirectiveSet
     {
