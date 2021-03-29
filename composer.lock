@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "infinityloop-dev/graphpinator-common",
-            "version": "v1.1",
+            "version": "v1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infinityloop-dev/graphpinator-common.git",
-                "reference": "b47578296b2dbb00aded25977f1101f1f4d57d07"
+                "reference": "74f82575cc86a2028810df6e6ead5b0281c3e49d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infinityloop-dev/graphpinator-common/zipball/b47578296b2dbb00aded25977f1101f1f4d57d07",
-                "reference": "b47578296b2dbb00aded25977f1101f1f4d57d07",
+                "url": "https://api.github.com/repos/infinityloop-dev/graphpinator-common/zipball/74f82575cc86a2028810df6e6ead5b0281c3e49d",
+                "reference": "74f82575cc86a2028810df6e6ead5b0281c3e49d",
                 "shasum": ""
             },
             "require": {
@@ -52,22 +52,22 @@
             "homepage": "https://www.infinityloop.dev/",
             "support": {
                 "issues": "https://github.com/infinityloop-dev/graphpinator-common/issues",
-                "source": "https://github.com/infinityloop-dev/graphpinator-common/tree/v1.1"
+                "source": "https://github.com/infinityloop-dev/graphpinator-common/tree/v1.2"
             },
-            "time": "2021-03-02T15:42:12+00:00"
+            "time": "2021-03-22T10:41:35+00:00"
         },
         {
             "name": "infinityloop-dev/graphpinator-tokenizer",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infinityloop-dev/graphpinator-tokenizer.git",
-                "reference": "5aa9a728a2b571666560eeaec0b8de0847b533c2"
+                "reference": "e68b8103499ac314305b097488541d6f9f92b506"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infinityloop-dev/graphpinator-tokenizer/zipball/5aa9a728a2b571666560eeaec0b8de0847b533c2",
-                "reference": "5aa9a728a2b571666560eeaec0b8de0847b533c2",
+                "url": "https://api.github.com/repos/infinityloop-dev/graphpinator-tokenizer/zipball/e68b8103499ac314305b097488541d6f9f92b506",
+                "reference": "e68b8103499ac314305b097488541d6f9f92b506",
                 "shasum": ""
             },
             "require": {
@@ -103,9 +103,9 @@
             "homepage": "https://www.infinityloop.dev/",
             "support": {
                 "issues": "https://github.com/infinityloop-dev/graphpinator-tokenizer/issues",
-                "source": "https://github.com/infinityloop-dev/graphpinator-tokenizer/tree/v1.0.1"
+                "source": "https://github.com/infinityloop-dev/graphpinator-tokenizer/tree/v1.0.2"
             },
-            "time": "2021-03-02T15:39:43+00:00"
+            "time": "2021-03-22T10:27:09+00:00"
         },
         {
             "name": "infinityloop-dev/utils",
