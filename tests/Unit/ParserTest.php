@@ -893,7 +893,7 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
             [
                 'query queryName { fieldName(duplicateArgument: 123, duplicateArgument: 123) }',
                 \Graphpinator\Parser\Exception\DuplicateArgument::class,
-                'Argument with name "duplicateArgument" already exists on current field.'
+                'Argument with name "duplicateArgument" already exists on current field.',
             ],
         ];
     }

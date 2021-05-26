@@ -14,7 +14,9 @@ final class Field
         private ?\Graphpinator\Parser\Field\FieldSet $children = null,
         private ?\Graphpinator\Parser\Value\ArgumentValueSet $arguments = null,
         private ?\Graphpinator\Parser\Directive\DirectiveSet $directives = null,
-    ) {}
+    )
+    {
+    }
 
     public function getName() : string
     {

@@ -10,7 +10,9 @@ final class NotNullRef implements \Graphpinator\Parser\TypeRef\TypeRef
 
     public function __construct(
         private TypeRef $innerRef,
-    ) {}
+    )
+    {
+    }
 
     public function getInnerRef() : TypeRef
     {

@@ -13,7 +13,9 @@ final class Fragment
         private \Graphpinator\Parser\TypeRef\NamedTypeRef $typeCond,
         private \Graphpinator\Parser\Directive\DirectiveSet $directives,
         private \Graphpinator\Parser\Field\FieldSet $fields,
-    ) {}
+    )
+    {
+    }
 
     public function getName() : string
     {

@@ -10,7 +10,9 @@ final class ObjectVal implements \Graphpinator\Parser\Value\Value
 
     public function __construct(
         private \stdClass $value,
-    ) {}
+    )
+    {
+    }
 
     public function getValue() : \stdClass
     {
