@@ -13,7 +13,9 @@ final class Variable
         private \Graphpinator\Parser\TypeRef\TypeRef $type,
         private ?\Graphpinator\Parser\Value\Value $default,
         private \Graphpinator\Parser\Directive\DirectiveSet $directives,
-    ) {}
+    )
+    {
+    }
 
     public function getName() : string
     {

@@ -10,7 +10,9 @@ final class ListVal implements \Graphpinator\Parser\Value\Value
 
     public function __construct(
         private array $value,
-    ) {}
+    )
+    {
+    }
 
     public function getValue() : array
     {

@@ -8,15 +8,13 @@ final class NamedFragmentSpread implements \Graphpinator\Parser\FragmentSpread\F
 {
     use \Nette\SmartObject;
 
-    private string $name;
     private \Graphpinator\Parser\Directive\DirectiveSet $directives;
 
     public function __construct(
-        string $name,
+        private string $name,
         ?\Graphpinator\Parser\Directive\DirectiveSet $directives = null,
     )
     {
-        $this->name = $name;
         $this->directives = $directives
             ?? new \Graphpinator\Parser\Directive\DirectiveSet();
     }

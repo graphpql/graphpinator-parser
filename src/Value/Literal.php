@@ -9,8 +9,10 @@ final class Literal implements \Graphpinator\Parser\Value\Value
     use \Nette\SmartObject;
 
     public function __construct(
-        private string|int|float|bool|null $value
-    ) {}
+        private string|int|float|bool|null $value,
+    )
+    {
+    }
 
     public function getRawValue() : string|int|float|bool|null
     {

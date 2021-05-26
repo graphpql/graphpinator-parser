@@ -11,7 +11,9 @@ final class ParsedRequest
     public function __construct(
         private \Graphpinator\Parser\Operation\OperationSet $operations,
         private \Graphpinator\Parser\Fragment\FragmentSet $fragments,
-    ) {}
+    )
+    {
+    }
 
     public function getOperations() : \Graphpinator\Parser\Operation\OperationSet
     {

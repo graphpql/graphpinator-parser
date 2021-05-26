@@ -8,27 +8,21 @@ final class Operation
 {
     use \Nette\SmartObject;
 
-    private string $type;
-    private ?string $name;
     private ?\Graphpinator\Parser\Variable\VariableSet $variables;
     private ?\Graphpinator\Parser\Directive\DirectiveSet $directives;
-    private \Graphpinator\Parser\Field\FieldSet $children;
 
     public function __construct(
-        string $type,
-        ?string $name,
+        private string $type,
+        private ?string $name,
         ?\Graphpinator\Parser\Variable\VariableSet $variables,
         ?\Graphpinator\Parser\Directive\DirectiveSet $directives,
-        \Graphpinator\Parser\Field\FieldSet $children,
+        private \Graphpinator\Parser\Field\FieldSet $children,
     )
     {
-        $this->type = $type;
-        $this->name = $name;
         $this->variables = $variables
             ?? new \Graphpinator\Parser\Variable\VariableSet();
         $this->directives = $directives
             ?? new \Graphpinator\Parser\Directive\DirectiveSet();
-        $this->children = $children;
     }
 
     public function getType() : string

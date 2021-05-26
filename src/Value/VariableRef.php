@@ -10,7 +10,9 @@ final class VariableRef implements \Graphpinator\Parser\Value\Value
 
     public function __construct(
         private string $varName,
-    ) {}
+    )
+    {
+    }
 
     public function getRawValue() : ?bool
     {
