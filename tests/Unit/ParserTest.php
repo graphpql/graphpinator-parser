@@ -610,6 +610,30 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
         self::assertNull($operation->getFields()->offsetGet(0)->getFields());
     }
 
+    public function testFieldArgumentsKeywordName() : void
+    {
+        $result = \Graphpinator\Parser\Parser::parseString('query queryName { type(input: "argVal") }');
+
+        self::assertCount(0, $result->getFragments());
+        self::assertCount(1, $result->getOperations());
+
+        $operation = $result->getOperations()->current();
+
+        self::assertCount(0, $operation->getVariables());
+        self::assertCount(1, $operation->getFields());
+        self::assertArrayHasKey(0, $operation->getFields());
+        self::assertSame('type', $operation->getFields()->offsetGet(0)->getName());
+        self::assertNull($operation->getFields()->offsetGet(0)->getAlias());
+        self::assertInstanceOf(
+            \Graphpinator\Parser\Value\ArgumentValueSet::class,
+            $operation->getFields()->offsetGet(0)->getArguments(),
+        );
+        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
+        self::assertArrayHasKey('input', $operation->getFields()->offsetGet(0)->getArguments());
+        self::assertSame('argVal', $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('input')->getValue()->getRawValue());
+        self::assertNull($operation->getFields()->offsetGet(0)->getFields());
+    }
+
     public function testFieldSubfield() : void
     {
         $result = \Graphpinator\Parser\Parser::parseString('query queryName { fieldName { innerField } }');
@@ -894,6 +918,16 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
                 'query queryName { fieldName(duplicateArgument: 123, duplicateArgument: 123) }',
                 \Graphpinator\Parser\Exception\DuplicateArgument::class,
                 'Argument with name "duplicateArgument" already exists on current field.',
+            ],
+            [
+                'fragment on on TypeName { field }',
+                \Graphpinator\Parser\Exception\DisallowedFragmentName::class,
+                'Invalid fragment name. Fragment cannot be named "on".',
+            ],
+            [
+                'fragment fragmentName TypeName { field }',
+                \Graphpinator\Parser\Exception\ExpectedTypeCondition::class,
+                'Expected type condition for fragment, got "name".',
             ],
         ];
     }

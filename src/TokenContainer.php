@@ -11,9 +11,9 @@ final class TokenContainer implements \IteratorAggregate
     private array $tokens = [];
     private int $currentIndex = 0;
 
-    public function __construct(\Graphpinator\Source\Source $source, bool $skipNotRelevant = true)
+    public function __construct(\Graphpinator\Source\Source $source)
     {
-        $tokenizer = new \Graphpinator\Tokenizer\Tokenizer($source, $skipNotRelevant);
+        $tokenizer = new \Graphpinator\Tokenizer\Tokenizer($source, true, false);
 
         foreach ($tokenizer as $token) {
             $this->tokens[] = $token;
@@ -68,11 +68,22 @@ final class TokenContainer implements \IteratorAggregate
     {
         $token = $this->getNext();
 
-        if ($token->getType() !== $tokenType) {
-            throw new $exceptionClass($token->getLocation(), $token->getType());
+        if ($token->getType() === $tokenType) {
+            return $token;
         }
 
-        return $token;
+        throw new $exceptionClass($token->getLocation(), $token->getType());
+    }
+
+    public function assertNextValue(string $tokenType, string $value, string $exceptionClass) : \Graphpinator\Tokenizer\Token
+    {
+        $token = $this->getNext();
+
+        if ($token->getType() === $tokenType && $token->getValue() === $value) {
+            return $token;
+        }
+
+        throw new $exceptionClass($token->getLocation(), $token->getType());
     }
 
     public function getIterator() : \ArrayIterator
