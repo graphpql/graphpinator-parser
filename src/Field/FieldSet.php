@@ -12,7 +12,10 @@ final class FieldSet extends \Infinityloop\Utils\ObjectSet
 {
     protected const INNER_CLASS = \Graphpinator\Parser\Field\Field::class;
 
-    public function __construct(array $fields, private \Graphpinator\Parser\FragmentSpread\FragmentSpreadSet $fragments)
+    public function __construct(
+        array $fields,
+        private \Graphpinator\Parser\FragmentSpread\FragmentSpreadSet $fragments,
+    )
     {
         parent::__construct($fields);
     }
