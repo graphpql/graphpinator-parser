@@ -161,16 +161,16 @@
         },
         {
             "name": "infinityloop-dev/utils",
-            "version": "v2.1.2",
+            "version": "v2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/infinityloop-dev/utils.git",
-                "reference": "fc1bf9cec56dde8af81ca993d8b64ce8a3ec29ab"
+                "reference": "5ac9ae283d36aa0c55ac7b478f28f36681338383"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/infinityloop-dev/utils/zipball/fc1bf9cec56dde8af81ca993d8b64ce8a3ec29ab",
-                "reference": "fc1bf9cec56dde8af81ca993d8b64ce8a3ec29ab",
+                "url": "https://api.github.com/repos/infinityloop-dev/utils/zipball/5ac9ae283d36aa0c55ac7b478f28f36681338383",
+                "reference": "5ac9ae283d36aa0c55ac7b478f28f36681338383",
                 "shasum": ""
             },
             "require": {
@@ -204,9 +204,9 @@
             "homepage": "https://www.infinityloop.dev/",
             "support": {
                 "issues": "https://github.com/infinityloop-dev/utils/issues",
-                "source": "https://github.com/infinityloop-dev/utils/tree/v2.1.2"
+                "source": "https://github.com/infinityloop-dev/utils/tree/v2.2"
             },
-            "time": "2020-12-07T15:29:38+00:00"
+            "time": "2021-06-24T16:47:55+00:00"
         },
         {
             "name": "nette/utils",
