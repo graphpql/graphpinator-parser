@@ -20,8 +20,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "^9.3",
-    "infection/infection": "^0.23 || ^0.24 || ^0.25 || ^0.26",
-    "phpstan/phpstan": "^0.12 || ^1.0",
+    "infection/infection": "^0.26",
+    "phpstan/phpstan": "^1.0",
     "infinityloop-dev/coding-standard": "^0.2"
   },
   "scripts": {
@@ -44,6 +44,12 @@
   "autoload-dev": {
     "psr-4": {
       "Graphpinator\\Parser\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "infection/extension-installer": true
     }
   }
 }
