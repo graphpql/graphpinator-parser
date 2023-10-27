@@ -226,6 +226,13 @@ final class Parser
             }
         }
 
+        if (\count($fields) === 0 && \count($fragments) === 0) {
+            throw new \Graphpinator\Parser\Exception\ExpectedSelectionSetBody(
+                $this->tokenizer->getNext()->getLocation(),
+                $this->tokenizer->getCurrent()->getType(),
+            );
+        }
+
         $this->tokenizer->getNext();
 
         return new \Graphpinator\Parser\Field\FieldSet($fields, new \Graphpinator\Parser\FragmentSpread\FragmentSpreadSet($fragments));
