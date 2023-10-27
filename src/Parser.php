@@ -206,7 +206,7 @@ final class Parser
         $fields = [];
         $fragments = [];
 
-        while ($this->tokenizer->peekNext()->getType() !== TokenType::CUR_C) {
+        do {
             switch ($this->tokenizer->peekNext()->getType()) {
                 case TokenType::ELLIP:
                     $this->tokenizer->getNext();
@@ -224,14 +224,7 @@ final class Parser
                         $this->tokenizer->getCurrent()->getType(),
                     );
             }
-        }
-
-        if (\count($fields) === 0 && \count($fragments) === 0) {
-            throw new \Graphpinator\Parser\Exception\ExpectedSelectionSetBody(
-                $this->tokenizer->getNext()->getLocation(),
-                $this->tokenizer->getCurrent()->getType(),
-            );
-        }
+        } while ($this->tokenizer->peekNext()->getType() !== TokenType::CUR_C);
 
         $this->tokenizer->getNext();
 
