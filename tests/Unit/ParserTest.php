@@ -745,7 +745,7 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
         self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments());
     }
 
-    public function invalidDataProvider() : array
+    public static function invalidDataProvider() : array
     {
         return [
             ['', \Graphpinator\Parser\Exception\EmptyRequest::class],
@@ -776,13 +776,13 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 'fragment fragmentName on TypeName! { f }',
-                \Graphpinator\Parser\Exception\ExpectedNamedType::class,
-                'Expected named type without type modifiers, got "TypeName!".',
+                \Graphpinator\Parser\Exception\ExpectedSelectionSet::class,
+                'Expected selection set, got "!".',
             ],
             [
                 'fragment fragmentName on [TypeName] { f }',
                 \Graphpinator\Parser\Exception\ExpectedNamedType::class,
-                'Expected named type without type modifiers, got "[TypeName]".',
+                'Expected named type without type modifiers, got "[".',
             ],
             [
                 'fragment fragmentName { f }',
@@ -791,8 +791,8 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 'fragment fragmentName on { f }',
-                \Graphpinator\Parser\Exception\ExpectedType::class,
-                'Expected type reference, got "{".',
+                \Graphpinator\Parser\Exception\ExpectedNamedType::class,
+                'Expected named type without type modifiers, got "{".',
             ],
             [
                 'queryName { f }',
@@ -824,23 +824,23 @@ final class ParserTest extends \PHPUnit\Framework\TestCase
             ],
             [
                 'query queryName { ... on { f } }',
-                \Graphpinator\Parser\Exception\ExpectedType::class,
-                'Expected type reference, got "{".',
+                \Graphpinator\Parser\Exception\ExpectedNamedType::class,
+                'Expected named type without type modifiers, got "{".',
             ],
             [
                 'query queryName { ... on Int! { f } }',
-                \Graphpinator\Parser\Exception\ExpectedNamedType::class,
-                'Expected named type without type modifiers, got "Int!".',
+                \Graphpinator\Parser\Exception\ExpectedSelectionSet::class,
+                'Expected selection set, got "!".',
             ],
             [
                 'query queryName { ... on [Int] { f } }',
                 \Graphpinator\Parser\Exception\ExpectedNamedType::class,
-                'Expected named type without type modifiers, got "[Int]".',
+                'Expected named type without type modifiers, got "[".',
             ],
             [
                 'query queryName { ... on [Int { f } }',
-                \Graphpinator\Parser\Exception\ExpectedClosingBracket::class,
-                'Expected closing ] for list type modifier, got "{".',
+                \Graphpinator\Parser\Exception\ExpectedNamedType::class,
+                'Expected named type without type modifiers, got "[".',
             ],
             [
                 'query queryName { ... on Int }',

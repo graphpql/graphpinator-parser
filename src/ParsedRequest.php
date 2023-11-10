@@ -6,8 +6,6 @@ namespace Graphpinator\Parser;
 
 final class ParsedRequest
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private \Graphpinator\Parser\Operation\OperationSet $operations,
         private \Graphpinator\Parser\Fragment\FragmentSet $fragments,

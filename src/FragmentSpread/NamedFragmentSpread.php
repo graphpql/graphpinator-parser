@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\FragmentSpread;
 
 final class NamedFragmentSpread implements \Graphpinator\Parser\FragmentSpread\FragmentSpread
 {
-    use \Nette\SmartObject;
-
     private \Graphpinator\Parser\Directive\DirectiveSet $directives;
 
     public function __construct(

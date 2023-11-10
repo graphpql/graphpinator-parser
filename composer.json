@@ -13,15 +13,14 @@
   ],
   "require": {
     "php": ">=8.0",
-    "infinityloop-dev/graphpinator-tokenizer": "^1.1.1",
-    "infinityloop-dev/graphpinator-common": "^1.1",
-    "infinityloop-dev/utils": "^2.0",
-    "nette/utils": "^3.0"
+    "infinityloop-dev/graphpinator-tokenizer": "^1.2",
+    "infinityloop-dev/graphpinator-common": "^2.0",
+    "infinityloop-dev/utils": "^2.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.3",
-    "infection/infection": "^0.26",
-    "phpstan/phpstan": "^1.0",
+    "phpunit/phpunit": "^10.4",
+    "infection/infection": "^0.27",
+    "phpstan/phpstan": "^1.10",
     "infinityloop-dev/coding-standard": "^0.2"
   },
   "scripts": {

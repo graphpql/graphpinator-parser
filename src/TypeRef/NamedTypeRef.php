@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\TypeRef;
 
 final class NamedTypeRef implements \Graphpinator\Parser\TypeRef\TypeRef
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private string $name,
     )

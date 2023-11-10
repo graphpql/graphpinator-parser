@@ -6,11 +6,11 @@ namespace Graphpinator\Parser\Exception;
 
 abstract class ParserError extends \Graphpinator\Exception\GraphpinatorBase
 {
-    public function __construct(\Graphpinator\Common\Location $location)
+    public function __construct(\Graphpinator\Common\Location $location, array $messageArgs = [])
     {
-        parent::__construct();
+        parent::__construct($messageArgs);
 
-        $this->location = $location;
+        $this->setLocation($location);
     }
 
     final public function isOutputable() : bool

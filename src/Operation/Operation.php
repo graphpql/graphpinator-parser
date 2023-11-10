@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\Operation;
 
 final class Operation
 {
-    use \Nette\SmartObject;
-
     private ?\Graphpinator\Parser\Variable\VariableSet $variables;
     private ?\Graphpinator\Parser\Directive\DirectiveSet $directives;
 

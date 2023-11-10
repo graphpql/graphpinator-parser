@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\Fragment;
 
 final class Fragment
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private string $name,
         private \Graphpinator\Parser\TypeRef\NamedTypeRef $typeCond,

@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\Field;
 
 final class Field
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private string $name,
         private ?string $alias = null,

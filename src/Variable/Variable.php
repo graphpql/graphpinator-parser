@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\Variable;
 
 final class Variable
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private string $name,
         private \Graphpinator\Parser\TypeRef\TypeRef $type,

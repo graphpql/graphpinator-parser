@@ -6,8 +6,6 @@ namespace Graphpinator\Parser\Value;
 
 final class VariableRef implements \Graphpinator\Parser\Value\Value
 {
-    use \Nette\SmartObject;
-
     public function __construct(
         private string $varName,
     )

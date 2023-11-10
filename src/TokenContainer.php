@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser;
 
+use \Graphpinator\Tokenizer\Token;
+
 final class TokenContainer implements \IteratorAggregate
 {
-    use \Nette\SmartObject;
-
     private array $tokens = [];
     private int $currentIndex = 0;
 
@@ -30,12 +30,12 @@ final class TokenContainer implements \IteratorAggregate
         return \count($this->tokens) === 0;
     }
 
-    public function getCurrent() : \Graphpinator\Tokenizer\Token
+    public function getCurrent() : Token
     {
         return $this->tokens[$this->currentIndex];
     }
 
-    public function getPrev() : \Graphpinator\Tokenizer\Token
+    public function getPrev() : Token
     {
         \assert(\array_key_exists($this->currentIndex - 1, $this->tokens));
 
@@ -44,7 +44,7 @@ final class TokenContainer implements \IteratorAggregate
         return $this->tokens[$this->currentIndex];
     }
 
-    public function getNext() : \Graphpinator\Tokenizer\Token
+    public function getNext() : Token
     {
         if (!$this->hasNext()) {
             throw new \Graphpinator\Parser\Exception\UnexpectedEnd($this->getCurrent()->getLocation());
@@ -55,7 +55,7 @@ final class TokenContainer implements \IteratorAggregate
         return $this->tokens[$this->currentIndex];
     }
 
-    public function peekNext() : \Graphpinator\Tokenizer\Token
+    public function peekNext() : Token
     {
         if (!$this->hasNext()) {
             throw new \Graphpinator\Parser\Exception\UnexpectedEnd($this->getCurrent()->getLocation());
@@ -64,7 +64,7 @@ final class TokenContainer implements \IteratorAggregate
         return $this->tokens[$this->currentIndex + 1];
     }
 
-    public function assertNext(string $tokenType, string $exceptionClass) : \Graphpinator\Tokenizer\Token
+    public function assertNext(\Graphpinator\Tokenizer\TokenType $tokenType, string $exceptionClass) : Token
     {
         $token = $this->getNext();
 
@@ -75,7 +75,7 @@ final class TokenContainer implements \IteratorAggregate
         throw new $exceptionClass($token->getLocation(), $token->getType());
     }
 
-    public function assertNextValue(string $tokenType, string $value, string $exceptionClass) : \Graphpinator\Tokenizer\Token
+    public function assertNextValue(\Graphpinator\Tokenizer\TokenType $tokenType, string $value, string $exceptionClass) : Token
     {
         $token = $this->getNext();
 

@@ -10,8 +10,6 @@ final class DuplicateArgument extends \Graphpinator\Parser\Exception\ParserError
 
     public function __construct(string $name, \Graphpinator\Common\Location $location)
     {
-        $this->messageArgs = [$name];
-
-        parent::__construct($location);
+        parent::__construct($location, [$name]);
     }
 }

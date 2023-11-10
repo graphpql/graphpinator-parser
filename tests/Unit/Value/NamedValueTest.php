@@ -6,7 +6,7 @@ namespace Graphpinator\Parser\Tests\Unit\Value;
 
 final class NamedValueTest extends \PHPUnit\Framework\TestCase
 {
-    public function simpleDataProvider() : array
+    public static function simpleDataProvider() : array
     {
         return [
             [new \Graphpinator\Parser\Value\Literal(123), 'name'],
