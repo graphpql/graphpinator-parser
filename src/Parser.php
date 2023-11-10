@@ -328,7 +328,7 @@ final class Parser
 
             $name = $this->tokenizer->getCurrent()->getValue();
             $this->tokenizer->assertNext(TokenType::COLON, \Graphpinator\Parser\Exception\ExpectedColon::class);
-            $type = $this->parseType(false);
+            $type = $this->parseType();
             $default = null;
 
             if ($this->tokenizer->peekNext()->getType() === TokenType::EQUAL) {
@@ -489,7 +489,7 @@ final class Parser
 
                 break;
             case TokenType::SQU_O:
-                $type = new \Graphpinator\Parser\TypeRef\ListTypeRef($this->parseType(false));
+                $type = new \Graphpinator\Parser\TypeRef\ListTypeRef($this->parseType());
                 $this->tokenizer->assertNext(TokenType::SQU_C, \Graphpinator\Parser\Exception\ExpectedClosingBracket::class);
 
                 break;
