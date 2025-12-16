@@ -142,7 +142,7 @@ final class Parser
             0 => throw new MissingOperation($this->tokenizer->getCurrent()->getLocation()),
             1 => $parsedRequest,
             default => \in_array(null, $operationNames, true)
-                ? throw new OperationWithoutName($locations[\array_search(null, $operationNames, true)])
+                ? throw new OperationWithoutName($locations[\array_search(null, $operationNames, true)]) // @phpstan-ignore offsetAccess.notFound
                 : $parsedRequest,
         };
     }
@@ -454,15 +454,16 @@ final class Parser
             }
 
             $name = $this->tokenizer->getCurrent()->getValue();
+            \assert(\is_string($name));
 
-            if (\array_key_exists($name, $arguments)) { // @phpstan-ignore argument.type
+            if (\array_key_exists($name, $arguments)) {
                 throw new DuplicateArgument($name, $this->tokenizer->getCurrent()->getLocation());
             }
 
             $this->tokenizer->assertNext(TokenType::COLON, ExpectedColon::class);
             $value = $this->parseValue(false);
 
-            $arguments[$name] = new ArgumentValue($value, $name); // @phpstan-ignore argument.type
+            $arguments[$name] = new ArgumentValue($value, $name);
         }
 
         $this->tokenizer->getNext();

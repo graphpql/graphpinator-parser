@@ -17,6 +17,8 @@ final class ArgumentValueSet extends ImplicitObjectMap
     #[\Override]
     protected function getKey(object $object) : string
     {
-        return $object->name; // @phpstan-ignore property.notFound
+        \assert($object instanceof ArgumentValue);
+
+        return $object->name;
     }
 }

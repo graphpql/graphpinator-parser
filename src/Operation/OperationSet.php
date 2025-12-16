@@ -17,6 +17,8 @@ final class OperationSet extends ImplicitObjectMap
     #[\Override]
     protected function getKey(object $object) : string
     {
+        \assert($object instanceof Operation);
+
         return $object->name
             ?? '';
     }
