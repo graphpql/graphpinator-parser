@@ -17,7 +17,7 @@ final class OperationSet extends ImplicitObjectMap
     #[\Override]
     protected function getKey(object $object) : string
     {
-        return $object->name // @phpstan-ignore property.notFound
+        return $object->name
             ?? '';
     }
 }
