@@ -994,4 +994,15 @@ final class ParserTest extends TestCase
 
         Parser::parseString($input);
     }
+
+    public function testEmptyRequestLocation() : void
+    {
+        try {
+            Parser::parseString('');
+            self::fail('Expected EmptyRequest exception');
+        } catch (EmptyRequest $e) {
+            self::assertSame(1, $e->getLocation()->getLine());
+            self::assertSame(1, $e->getLocation()->getColumn());
+        }
+    }
 }
