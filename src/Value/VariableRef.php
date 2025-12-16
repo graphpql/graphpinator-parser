@@ -12,7 +12,8 @@ final class VariableRef implements Value
     {
     }
 
-    public function getRawValue() : ?bool
+    #[\Override]
+    public function getRawValue() : never
     {
         throw new \RuntimeException('Operation not supported.');
     }
@@ -22,6 +23,7 @@ final class VariableRef implements Value
         return $this->varName;
     }
 
+    #[\Override]
     public function accept(ValueVisitor $valueVisitor) : mixed
     {
         return $valueVisitor->visitVariableRef($this);

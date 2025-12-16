@@ -12,11 +12,13 @@ final class EnumLiteral implements Value
     {
     }
 
+    #[\Override]
     public function getRawValue() : string
     {
         return $this->value;
     }
 
+    #[\Override]
     public function accept(ValueVisitor $valueVisitor) : mixed
     {
         return $valueVisitor->visitEnumLiteral($this);

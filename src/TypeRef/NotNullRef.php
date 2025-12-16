@@ -17,6 +17,7 @@ final class NotNullRef implements TypeRef
         return $this->innerRef;
     }
 
+    #[\Override]
     public function print() : string
     {
         return $this->innerRef->print() . '!';

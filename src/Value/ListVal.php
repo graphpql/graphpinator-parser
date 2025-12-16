@@ -25,6 +25,7 @@ final class ListVal implements Value
      * @phpcs:ignore
      * @return list<mixed>
      */
+    #[\Override]
     public function getRawValue() : array
     {
         $return = [];
@@ -36,6 +37,7 @@ final class ListVal implements Value
         return $return;
     }
 
+    #[\Override]
     public function accept(ValueVisitor $valueVisitor) : mixed
     {
         return $valueVisitor->visitListVal($this);

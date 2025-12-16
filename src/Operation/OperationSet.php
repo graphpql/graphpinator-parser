@@ -14,6 +14,7 @@ final class OperationSet extends ImplicitObjectMap
 {
     protected const INNER_CLASS = Operation::class;
 
+    #[\Override]
     protected function getKey(object $object) : string
     {
         return $object->getName() // @phpstan-ignore method.notFound

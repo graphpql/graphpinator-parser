@@ -109,6 +109,7 @@ final class TokenContainer implements \IteratorAggregate
     /**
      * @return \ArrayIterator<int, Token>
      */
+    #[\Override]
     public function getIterator() : \ArrayIterator
     {
         return new \ArrayIterator($this->tokens);

@@ -23,6 +23,7 @@ abstract class ParserError extends GraphpinatorBase
         $this->setLocation($location);
     }
 
+    #[\Override]
     final public function isOutputable() : bool
     {
         return true;

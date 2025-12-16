@@ -12,11 +12,13 @@ final class Literal implements Value
     {
     }
 
+    #[\Override]
     public function getRawValue() : string|int|float|bool|null
     {
         return $this->value;
     }
 
+    #[\Override]
     public function accept(ValueVisitor $valueVisitor) : mixed
     {
         return $valueVisitor->visitLiteral($this);

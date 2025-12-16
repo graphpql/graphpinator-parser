@@ -14,6 +14,7 @@ final class FragmentSet extends ImplicitObjectMap
 {
     protected const INNER_CLASS = Fragment::class;
 
+    #[\Override]
     protected function getKey(object $object) : string
     {
         return $object->getName(); // @phpstan-ignore method.notFound

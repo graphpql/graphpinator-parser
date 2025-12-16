@@ -17,6 +17,7 @@ final class NamedTypeRef implements TypeRef
         return $this->name;
     }
 
+    #[\Override]
     public function print() : string
     {
         return $this->name;

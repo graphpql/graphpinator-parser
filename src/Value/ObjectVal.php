@@ -17,6 +17,7 @@ final class ObjectVal implements Value
         return $this->value;
     }
 
+    #[\Override]
     public function getRawValue() : \stdClass
     {
         $return = new \stdClass();
@@ -30,6 +31,7 @@ final class ObjectVal implements Value
         return $return;
     }
 
+    #[\Override]
     public function accept(ValueVisitor $valueVisitor) : mixed
     {
         return $valueVisitor->visitObjectVal($this);
