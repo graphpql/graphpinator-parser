@@ -4,9 +4,15 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Exception;
 
-abstract class ParserError extends \Graphpinator\Exception\GraphpinatorBase
+use Graphpinator\Common\Location;
+use Graphpinator\Exception\GraphpinatorBase;
+
+abstract class ParserError extends GraphpinatorBase
 {
-    public function __construct(\Graphpinator\Common\Location $location, array $messageArgs = [])
+    public function __construct(
+        Location $location,
+        array $messageArgs = [],
+    )
     {
         parent::__construct($messageArgs);
 

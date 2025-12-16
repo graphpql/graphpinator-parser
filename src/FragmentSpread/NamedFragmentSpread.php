@@ -4,17 +4,19 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\FragmentSpread;
 
-final class NamedFragmentSpread implements \Graphpinator\Parser\FragmentSpread\FragmentSpread
+use Graphpinator\Parser\Directive\DirectiveSet;
+
+final class NamedFragmentSpread implements FragmentSpread
 {
-    private \Graphpinator\Parser\Directive\DirectiveSet $directives;
+    private DirectiveSet $directives;
 
     public function __construct(
         private string $name,
-        ?\Graphpinator\Parser\Directive\DirectiveSet $directives = null,
+        ?DirectiveSet $directives = null,
     )
     {
         $this->directives = $directives
-            ?? new \Graphpinator\Parser\Directive\DirectiveSet();
+            ?? new DirectiveSet();
     }
 
     public function getName() : string
@@ -22,7 +24,7 @@ final class NamedFragmentSpread implements \Graphpinator\Parser\FragmentSpread\F
         return $this->name;
     }
 
-    public function getDirectives() : \Graphpinator\Parser\Directive\DirectiveSet
+    public function getDirectives() : DirectiveSet
     {
         return $this->directives;
     }

@@ -4,23 +4,27 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Operation;
 
+use Graphpinator\Parser\Directive\DirectiveSet;
+use Graphpinator\Parser\Field\FieldSet;
+use Graphpinator\Parser\Variable\VariableSet;
+
 final class Operation
 {
-    private ?\Graphpinator\Parser\Variable\VariableSet $variables;
-    private ?\Graphpinator\Parser\Directive\DirectiveSet $directives;
+    private ?VariableSet $variables;
+    private ?DirectiveSet $directives;
 
     public function __construct(
         private string $type,
         private ?string $name,
-        ?\Graphpinator\Parser\Variable\VariableSet $variables,
-        ?\Graphpinator\Parser\Directive\DirectiveSet $directives,
-        private \Graphpinator\Parser\Field\FieldSet $children,
+        ?VariableSet $variables,
+        ?DirectiveSet $directives,
+        private FieldSet $children,
     )
     {
         $this->variables = $variables
-            ?? new \Graphpinator\Parser\Variable\VariableSet();
+            ?? new VariableSet();
         $this->directives = $directives
-            ?? new \Graphpinator\Parser\Directive\DirectiveSet();
+            ?? new DirectiveSet();
     }
 
     public function getType() : string
@@ -33,17 +37,17 @@ final class Operation
         return $this->name;
     }
 
-    public function getFields() : \Graphpinator\Parser\Field\FieldSet
+    public function getFields() : FieldSet
     {
         return $this->children;
     }
 
-    public function getVariables() : \Graphpinator\Parser\Variable\VariableSet
+    public function getVariables() : VariableSet
     {
         return $this->variables;
     }
 
-    public function getDirectives() : \Graphpinator\Parser\Directive\DirectiveSet
+    public function getDirectives() : DirectiveSet
     {
         return $this->directives;
     }

@@ -4,9 +4,15 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Exception;
 
-abstract class ExpectedError extends \Graphpinator\Parser\Exception\ParserError
+use Graphpinator\Common\Location;
+use Graphpinator\Tokenizer\TokenType;
+
+abstract class ExpectedError extends ParserError
 {
-    final public function __construct(\Graphpinator\Common\Location $location, \Graphpinator\Tokenizer\TokenType $token)
+    final public function __construct(
+        Location $location,
+        TokenType $token,
+    )
     {
         parent::__construct($location, [$token->value]);
     }
