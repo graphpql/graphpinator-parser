@@ -9,6 +9,10 @@ use Graphpinator\Exception\GraphpinatorBase;
 
 abstract class ParserError extends GraphpinatorBase
 {
+    /**
+     * @param Location $location
+     * @param list<string> $messageArgs
+     */
     public function __construct(
         Location $location,
         array $messageArgs = [],

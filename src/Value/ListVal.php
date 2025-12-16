@@ -7,23 +7,29 @@ namespace Graphpinator\Parser\Value;
 final class ListVal implements Value
 {
     public function __construct(
+        /** @var list<Value> */
         private array $value,
     )
     {
     }
 
+    /**
+     * @return list<Value>
+     */
     public function getValue() : array
     {
         return $this->value;
     }
 
+    /**
+     * @phpcs:ignore
+     * @return list<mixed>
+     */
     public function getRawValue() : array
     {
         $return = [];
 
         foreach ($this->value as $value) {
-            \assert($value instanceof Value);
-
             $return[] = $value->getRawValue();
         }
 

@@ -167,8 +167,8 @@ final class Parser
     /**
      * Parses fragment definition after fragment keyword.
      *
-     * Expects iterator on previous token - fragment keyword
-     * Leaves iterator to last used token - closing brace
+     * Expects iterator on previous token = fragment keyword
+     * Leaves iterator to last used token = closing brace
      */
     private function parseFragmentDefinition() : Fragment
     {
@@ -191,6 +191,9 @@ final class Parser
         );
     }
 
+    /**
+     * @return array{0: ?string, 1: ?VariableSet, 2: ?DirectiveSet, 3: FieldSet}
+     */
     private function parseAfterOperationType() : array
     {
         $operationName = null;
@@ -206,6 +209,9 @@ final class Parser
         ];
     }
 
+    /**
+     * @return array{0: ?VariableSet, 1: ?DirectiveSet, 2: FieldSet}
+     */
     private function parseAfterOperationName() : array
     {
         $variables = null;
@@ -221,6 +227,9 @@ final class Parser
         ];
     }
 
+    /**
+     * @return array{0: ?DirectiveSet, 1: FieldSet}
+     */
     private function parseAfterOperationVariables() : array
     {
         $directives = null;
@@ -247,8 +256,8 @@ final class Parser
     /**
      * Parses selection set.
      *
-     * Expects iterator on previous token - opening brace
-     * Leaves iterator to last used token - closing brace
+     * Expects iterator on previous token = opening brace
+     * Leaves iterator to last used token = closing brace
      */
     private function parseSelectionSet() : FieldSet
     {
@@ -316,10 +325,10 @@ final class Parser
     }
 
     /**
-     * Parses fragment spread after ellipsis.
+     * Parse fragment spread after ellipsis.
      *
-     * Expects iterator on previous token - ellipsis
-     * Leaves iterator to last used token - either fragment name or closing brace
+     * Expects iterator on previous token = ellipsis
+     * Leaves iterator to last-used token = either fragment name or closing brace
      */
     private function parseFragmentSpread() : FragmentSpread
     {
@@ -404,7 +413,7 @@ final class Parser
      * Parses directive list.
      *
      * Expects iterator on previous token
-     * Leaves iterator to last used token - closing parenthesis
+     * Leaves iterator to last-used token = closing parenthesis
      */
     private function parseDirectives() : DirectiveSet
     {
@@ -447,14 +456,14 @@ final class Parser
 
             $name = $this->tokenizer->getCurrent()->getValue();
 
-            if (\array_key_exists($name, $arguments)) {
+            if (\array_key_exists($name, $arguments)) { // @phpstan-ignore argument.type
                 throw new DuplicateArgument($name, $this->tokenizer->getCurrent()->getLocation());
             }
 
             $this->tokenizer->assertNext(TokenType::COLON, ExpectedColon::class);
             $value = $this->parseValue(false);
 
-            $arguments[$name] = new ArgumentValue($value, $name);
+            $arguments[$name] = new ArgumentValue($value, $name); // @phpstan-ignore argument.type
         }
 
         $this->tokenizer->getNext();
@@ -481,13 +490,13 @@ final class Parser
                     );
                 }
 
-                return new VariableRef($this->tokenizer->getCurrent()->getValue());
+                return new VariableRef($this->tokenizer->getCurrent()->getValue()); // @phpstan-ignore argument.type
             case TokenType::NAME:
                 return match ($this->tokenizer->getCurrent()->getValue()) {
                     TokenType::TRUE->value => new Literal(true),
                     TokenType::FALSE->value => new Literal(false),
                     TokenType::NULL->value => new Literal(null),
-                    default => new EnumLiteral($this->tokenizer->getCurrent()->getValue()),
+                    default => new EnumLiteral($this->tokenizer->getCurrent()->getValue()), // @phpstan-ignore argument.type
                 };
             case TokenType::STRING:
                 return new Literal($this->tokenizer->getCurrent()->getValue());
@@ -536,7 +545,7 @@ final class Parser
     {
         switch ($this->tokenizer->getNext()->getType()) {
             case TokenType::NAME:
-                $type = new NamedTypeRef($this->tokenizer->getCurrent()->getValue());
+                $type = new NamedTypeRef($this->tokenizer->getCurrent()->getValue()); // @phpstan-ignore argument.type
 
                 break;
             case TokenType::SQU_O:
@@ -576,6 +585,6 @@ final class Parser
             );
         }
 
-        return new NamedTypeRef($this->tokenizer->getCurrent()->getValue());
+        return new NamedTypeRef($this->tokenizer->getCurrent()->getValue()); // @phpstan-ignore argument.type
     }
 }

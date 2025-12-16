@@ -4,14 +4,19 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser;
 
+use Graphpinator\Parser\Exception\ParserError;
 use Graphpinator\Parser\Exception\UnexpectedEnd;
 use Graphpinator\Source\Source;
 use Graphpinator\Tokenizer\Token;
 use Graphpinator\Tokenizer\TokenType;
 use Graphpinator\Tokenizer\Tokenizer;
 
+/**
+ * @implements \IteratorAggregate<int, Token>
+ */
 final class TokenContainer implements \IteratorAggregate
 {
+    /** @var list<Token> */
     private array $tokens = [];
     private int $currentIndex = 0;
 
@@ -70,6 +75,10 @@ final class TokenContainer implements \IteratorAggregate
         return $this->tokens[$this->currentIndex + 1];
     }
 
+    /**
+     * @param TokenType $tokenType
+     * @param class-string<ParserError> $exceptionClass
+     */
     public function assertNext(TokenType $tokenType, string $exceptionClass) : Token
     {
         $token = $this->getNext();
@@ -81,6 +90,11 @@ final class TokenContainer implements \IteratorAggregate
         throw new $exceptionClass($token->getLocation(), $token->getType());
     }
 
+    /**
+     * @param TokenType $tokenType
+     * @param string $value
+     * @param class-string<ParserError> $exceptionClass
+     */
     public function assertNextValue(TokenType $tokenType, string $value, string $exceptionClass) : Token
     {
         $token = $this->getNext();
@@ -92,6 +106,9 @@ final class TokenContainer implements \IteratorAggregate
         throw new $exceptionClass($token->getLocation(), $token->getType());
     }
 
+    /**
+     * @return \ArrayIterator<int, Token>
+     */
     public function getIterator() : \ArrayIterator
     {
         return new \ArrayIterator($this->tokens);

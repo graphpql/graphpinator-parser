@@ -10,8 +10,8 @@ use Graphpinator\Parser\Variable\VariableSet;
 
 final class Operation
 {
-    private ?VariableSet $variables;
-    private ?DirectiveSet $directives;
+    private VariableSet $variables;
+    private DirectiveSet $directives;
 
     public function __construct(
         private string $type,

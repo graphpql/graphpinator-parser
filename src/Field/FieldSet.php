@@ -15,6 +15,9 @@ final class FieldSet extends ObjectSet
 {
     protected const INNER_CLASS = Field::class;
 
+    /**
+     * @param list<Field> $fields
+     */
     public function __construct(
         array $fields,
         private FragmentSpreadSet $fragments,
