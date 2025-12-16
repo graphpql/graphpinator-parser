@@ -32,8 +32,8 @@ final class NamedValueTest extends TestCase
     {
         $obj = new ArgumentValue($value, $name);
 
-        self::assertSame($name, $obj->getName());
-        self::assertSame($value, $obj->getValue());
-        self::assertSame($value->getRawValue(), $obj->getValue()->getRawValue());
+        self::assertSame($name, $obj->name);
+        self::assertSame($value, $obj->value);
+        self::assertSame($value->getRawValue(), $obj->value->getRawValue());
     }
 }

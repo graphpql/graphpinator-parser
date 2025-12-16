@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class VariableRef implements Value
+final readonly class VariableRef implements Value
 {
     public function __construct(
-        private string $varName,
+        public string $varName,
     )
     {
     }
@@ -16,11 +16,6 @@ final class VariableRef implements Value
     public function getRawValue() : never
     {
         throw new \RuntimeException('Operation not supported.');
-    }
-
-    public function getVarName() : string
-    {
-        return $this->varName;
     }
 
     #[\Override]

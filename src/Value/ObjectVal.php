@@ -4,17 +4,12 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class ObjectVal implements Value
+final readonly class ObjectVal implements Value
 {
     public function __construct(
-        private \stdClass $value,
+        public \stdClass $value,
     )
     {
-    }
-
-    public function getValue() : \stdClass
-    {
-        return $this->value;
     }
 
     #[\Override]

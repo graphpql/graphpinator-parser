@@ -46,118 +46,118 @@ final class ParserTest extends TestCase
         $parser = new Parser();
         $result = $parser->parse($source);
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertSame('queryName', $result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertSame('queryName', $result->operations->current()->name);
     }
 
     public function testQuery() : void
     {
         $result = Parser::parseString('query queryName { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertSame('queryName', $result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertSame('queryName', $result->operations->current()->name);
     }
 
     public function testMutation() : void
     {
         $result = Parser::parseString('mutation mutName { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::MUTATION, $result->getOperations()->current()->getType());
-        self::assertSame('mutName', $result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::MUTATION, $result->operations->current()->type);
+        self::assertSame('mutName', $result->operations->current()->name);
     }
 
     public function testSubscription() : void
     {
         $result = Parser::parseString('subscription subName { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::SUBSCRIPTION, $result->getOperations()->current()->getType());
-        self::assertSame('subName', $result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::SUBSCRIPTION, $result->operations->current()->type);
+        self::assertSame('subName', $result->operations->current()->name);
     }
 
     public function testQueryNoName() : void
     {
         $result = Parser::parseString('query { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertNull($result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertNull($result->operations->current()->name);
     }
 
     public function testQueryShorthand() : void
     {
         $result = Parser::parseString('{ field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertNull($result->getOperations()->current()->getName());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertNull($result->operations->current()->name);
     }
 
     public function testQueryMultiple() : void
     {
         $result = Parser::parseString('query qName { field } mutation mName { field }');
 
-        self::assertCount(0, $result->getFragments());
+        self::assertCount(0, $result->fragments);
     }
 
     public function testDirective() : void
     {
         $result = Parser::parseString('query { field @directiveName(arg1: 123) }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getDirectives());
-        self::assertArrayHasKey(0, $operation->getFields()->offsetGet(0)->getDirectives());
-        self::assertSame('directiveName', $operation->getFields()->offsetGet(0)->getDirectives()->offsetGet(0)->getName());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getDirectives()->offsetGet(0)->getArguments());
-        self::assertArrayHasKey('arg1', $operation->getFields()->offsetGet(0)->getDirectives()->offsetGet(0)->getArguments());
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertCount(1, $operation->children->offsetGet(0)->directives);
+        self::assertArrayHasKey(0, $operation->children->offsetGet(0)->directives);
+        self::assertSame('directiveName', $operation->children->offsetGet(0)->directives->offsetGet(0)->name);
+        self::assertCount(1, $operation->children->offsetGet(0)->directives->offsetGet(0)->arguments);
+        self::assertArrayHasKey('arg1', $operation->children->offsetGet(0)->directives->offsetGet(0)->arguments);
         self::assertSame(
             'arg1',
             $operation
-                ->getFields()
+                ->children
                 ->offsetGet(0)
-                ->getDirectives()
+                ->directives
                 ->offsetGet(0)
-                ->getArguments()
+                ->arguments
                 ->offsetGet('arg1')
-                ->getName(),
+                ->name,
         );
         self::assertSame(
             123,
             $operation
-                ->getFields()
+                ->children
                 ->offsetGet(0)
-                ->getDirectives()
+                ->directives
                 ->offsetGet(0)
-                ->getArguments()
+                ->arguments
                 ->offsetGet('arg1')
-                ->getValue()
+                ->value
                 ->getRawValue(),
         );
     }
@@ -166,102 +166,102 @@ final class ParserTest extends TestCase
     {
         $result = Parser::parseString('fragment fragmentName on TypeName { field } query queryName { field }');
 
-        self::assertCount(1, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertArrayHasKey('fragmentName', $result->getFragments());
-        self::assertSame('fragmentName', $result->getFragments()->offsetGet('fragmentName')->getName());
-        self::assertSame('TypeName', $result->getFragments()->offsetGet('fragmentName')->getTypeCond()->getName());
-        self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
-        self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertSame('queryName', $result->getOperations()->current()->getName());
-        self::assertCount(0, $result->getFragments()->offsetGet('fragmentName')->getDirectives());
+        self::assertCount(1, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertArrayHasKey('fragmentName', $result->fragments);
+        self::assertSame('fragmentName', $result->fragments->offsetGet('fragmentName')->name);
+        self::assertSame('TypeName', $result->fragments->offsetGet('fragmentName')->typeCond->name);
+        self::assertCount(1, $result->fragments->offsetGet('fragmentName')->fields);
+        self::assertCount(1, $result->fragments->offsetGet('fragmentName')->fields);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertSame('queryName', $result->operations->current()->name);
+        self::assertCount(0, $result->fragments->offsetGet('fragmentName')->directives);
     }
 
     public function testFragmentDirectives() : void
     {
         $result = Parser::parseString('fragment fragmentName on TypeName @abc { field } query { field }');
 
-        self::assertCount(1, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
-        self::assertArrayHasKey('fragmentName', $result->getFragments());
-        self::assertSame('fragmentName', $result->getFragments()->offsetGet('fragmentName')->getName());
-        self::assertSame('TypeName', $result->getFragments()->offsetGet('fragmentName')->getTypeCond()->getName());
-        self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
-        self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
-        self::assertCount(0, $result->getOperations()->current()->getVariables());
-        self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
-        self::assertNull($result->getOperations()->current()->getName());
-        self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getDirectives());
-        self::assertSame('abc', $result->getFragments()->offsetGet('fragmentName')->getDirectives()->offsetGet(0)->getName());
+        self::assertCount(1, $result->fragments);
+        self::assertCount(1, $result->operations);
+        self::assertArrayHasKey('fragmentName', $result->fragments);
+        self::assertSame('fragmentName', $result->fragments->offsetGet('fragmentName')->name);
+        self::assertSame('TypeName', $result->fragments->offsetGet('fragmentName')->typeCond->name);
+        self::assertCount(1, $result->fragments->offsetGet('fragmentName')->fields);
+        self::assertCount(1, $result->fragments->offsetGet('fragmentName')->fields);
+        self::assertCount(0, $result->operations->current()->variables);
+        self::assertCount(1, $result->operations->current()->children);
+        self::assertSame(OperationType::QUERY, $result->operations->current()->type);
+        self::assertNull($result->operations->current()->name);
+        self::assertCount(1, $result->fragments->offsetGet('fragmentName')->directives);
+        self::assertSame('abc', $result->fragments->offsetGet('fragmentName')->directives->offsetGet(0)->name);
     }
 
     public function testNamedFragmentSpread() : void
     {
         $result = Parser::parseString('query { ... fragmentName } ');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads());
+        self::assertCount(0, $operation->children);
+        self::assertCount(1, $operation->children->getFragmentSpreads());
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads());
         self::assertInstanceOf(
             NamedFragmentSpread::class,
-            $operation->getFields()->getFragmentSpreads()[0],
+            $operation->children->getFragmentSpreads()[0],
         );
-        self::assertSame('fragmentName', $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getName());
-        self::assertCount(0, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
+        self::assertSame('fragmentName', $operation->children->getFragmentSpreads()->offsetGet(0)->name);
+        self::assertCount(0, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
     }
 
     public function testInlineFragmentSpread() : void
     {
         $result = Parser::parseString('query { ... on TypeName { fieldName } }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads());
+        self::assertCount(0, $operation->children);
+        self::assertCount(1, $operation->children->getFragmentSpreads());
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads());
         self::assertInstanceOf(
             InlineFragmentSpread::class,
-            $operation->getFields()->getFragmentSpreads()[0],
+            $operation->children->getFragmentSpreads()[0],
         );
-        self::assertSame('TypeName', $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getTypeCond()->getName());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getFields());
-        self::assertCount(0, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
+        self::assertSame('TypeName', $operation->children->getFragmentSpreads()->offsetGet(0)->typeCond->name);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->fields);
+        self::assertCount(0, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
     }
 
     public function testNamedFragmentSpreadDirective() : void
     {
         $result = Parser::parseString('query { ... fragmentName @directiveName() }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads());
+        self::assertCount(0, $operation->children);
+        self::assertCount(1, $operation->children->getFragmentSpreads());
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads());
         self::assertInstanceOf(
             NamedFragmentSpread::class,
-            $operation->getFields()->getFragmentSpreads()[0],
+            $operation->children->getFragmentSpreads()[0],
         );
-        self::assertSame('fragmentName', $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getName());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
+        self::assertSame('fragmentName', $operation->children->getFragmentSpreads()->offsetGet(0)->name);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
         self::assertSame(
             'directiveName',
-            $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives()->offsetGet(0)->getName(),
+            $operation->children->getFragmentSpreads()->offsetGet(0)->directives->offsetGet(0)->name,
         );
     }
 
@@ -269,25 +269,25 @@ final class ParserTest extends TestCase
     {
         $result = Parser::parseString('query { ... @directiveName() { fieldName } }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads());
+        self::assertCount(0, $operation->children);
+        self::assertCount(1, $operation->children->getFragmentSpreads());
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads());
         self::assertInstanceOf(
             InlineFragmentSpread::class,
-            $operation->getFields()->getFragmentSpreads()[0],
+            $operation->children->getFragmentSpreads()[0],
         );
-        self::assertNull($operation->getFields()->getFragmentSpreads()->offsetGet(0)->getTypeCond());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
+        self::assertNull($operation->children->getFragmentSpreads()->offsetGet(0)->typeCond);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->fields);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
         self::assertSame(
             'directiveName',
-            $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives()->offsetGet(0)->getName(),
+            $operation->children->getFragmentSpreads()->offsetGet(0)->directives->offsetGet(0)->name,
         );
     }
 
@@ -295,25 +295,25 @@ final class ParserTest extends TestCase
     {
         $result = Parser::parseString('query { ... on TypeName @directiveName() { fieldName } }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads());
+        self::assertCount(0, $operation->children);
+        self::assertCount(1, $operation->children->getFragmentSpreads());
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads());
         self::assertInstanceOf(
             InlineFragmentSpread::class,
-            $operation->getFields()->getFragmentSpreads()[0],
+            $operation->children->getFragmentSpreads()[0],
         );
-        self::assertSame('TypeName', $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getTypeCond()->getName());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getFields());
-        self::assertCount(1, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
-        self::assertArrayHasKey(0, $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives());
+        self::assertSame('TypeName', $operation->children->getFragmentSpreads()->offsetGet(0)->typeCond->name);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->fields);
+        self::assertCount(1, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
+        self::assertArrayHasKey(0, $operation->children->getFragmentSpreads()->offsetGet(0)->directives);
         self::assertSame(
             'directiveName',
-            $operation->getFields()->getFragmentSpreads()->offsetGet(0)->getDirectives()->offsetGet(0)->getName(),
+            $operation->children->getFragmentSpreads()->offsetGet(0)->directives->offsetGet(0)->name,
         );
     }
 
@@ -321,119 +321,119 @@ final class ParserTest extends TestCase
     {
         $result = Parser::parseString('query queryName ($varName: Int) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertSame('queryName', $operation->getName());
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertCount(0, $operation->getDirectives());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertSame('queryName', $operation->name);
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertCount(0, $operation->directives);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Int', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertNull($operation->getVariables()->offsetGet('varName')->getDefault());
+        self::assertSame('Int', $operation->variables->offsetGet('varName')->type->name);
+        self::assertNull($operation->variables->offsetGet('varName')->default);
     }
 
     public function testVariableNoName() : void
     {
         $result = Parser::parseString('query ($varName: Int) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertNull($operation->getName());
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertCount(0, $operation->getDirectives());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertNull($operation->name);
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertCount(0, $operation->directives);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Int', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertNull($operation->getVariables()->offsetGet('varName')->getDefault());
+        self::assertSame('Int', $operation->variables->offsetGet('varName')->type->name);
+        self::assertNull($operation->variables->offsetGet('varName')->default);
     }
 
     public function testDirectiveNoName() : void
     {
         $result = Parser::parseString('query @directive { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertNull($operation->getName());
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getDirectives());
-        self::assertArrayHasKey(0, $operation->getDirectives());
-        self::assertSame('directive', $operation->getDirectives()->offsetGet(0)->getName());
-        self::assertNull($operation->getDirectives()->offsetGet(0)->getArguments());
+        self::assertNull($operation->name);
+        self::assertCount(1, $operation->children);
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->directives);
+        self::assertArrayHasKey(0, $operation->directives);
+        self::assertSame('directive', $operation->directives->offsetGet(0)->name);
+        self::assertNull($operation->directives->offsetGet(0)->arguments);
     }
 
     public function testVariableDefault() : void
     {
         $result = Parser::parseString('query queryName ($varName: Float = 3.14) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Float', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertSame(3.14, $operation->getVariables()->offsetGet('varName')->getDefault()->getRawValue());
+        self::assertSame('Float', $operation->variables->offsetGet('varName')->type->name);
+        self::assertSame(3.14, $operation->variables->offsetGet('varName')->default->getRawValue());
     }
 
     public function testVariableComplexType() : void
     {
         $result = Parser::parseString('query queryName ($varName: [Int!]!) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NotNullRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
         self::assertInstanceOf(
             ListTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef(),
+            $operation->variables->offsetGet('varName')->type->innerRef,
         );
         self::assertInstanceOf(
             NotNullRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef()->getInnerRef(),
+            $operation->variables->offsetGet('varName')->type->innerRef->innerRef,
         );
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef()->getInnerRef()->getInnerRef(),
+            $operation->variables->offsetGet('varName')->type->innerRef->innerRef->innerRef,
         );
         self::assertSame(
             'Int',
-            $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef()->getInnerRef()->getInnerRef()->getName(),
+            $operation->variables->offsetGet('varName')->type->innerRef->innerRef->innerRef->name,
         );
     }
 
@@ -441,272 +441,272 @@ final class ParserTest extends TestCase
     {
         $result = Parser::parseString('query queryName ($varName: Boolean = true, $varName2: Boolean!) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(2, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertArrayHasKey('varName2', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
-        self::assertSame('varName2', $operation->getVariables()->offsetGet('varName2')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(2, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertArrayHasKey('varName2', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
+        self::assertSame('varName2', $operation->variables->offsetGet('varName2')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Boolean', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertTrue($operation->getVariables()->offsetGet('varName')->getDefault()->getRawValue());
+        self::assertSame('Boolean', $operation->variables->offsetGet('varName')->type->name);
+        self::assertTrue($operation->variables->offsetGet('varName')->default->getRawValue());
         self::assertInstanceOf(
             NotNullRef::class,
-            $operation->getVariables()->offsetGet('varName2')->getType(),
+            $operation->variables->offsetGet('varName2')->type,
         );
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName2')->getType()->getInnerRef(),
+            $operation->variables->offsetGet('varName2')->type->innerRef,
         );
-        self::assertSame('Boolean', $operation->getVariables()->offsetGet('varName2')->getType()->getInnerRef()->getName());
-        self::assertNull($operation->getVariables()->offsetGet('varName2')->getDefault());
+        self::assertSame('Boolean', $operation->variables->offsetGet('varName2')->type->innerRef->name);
+        self::assertNull($operation->variables->offsetGet('varName2')->default);
     }
 
     public function testVariableDefaultList() : void
     {
         $result = Parser::parseString('query queryName ($varName: [Bool] = [true, false]) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             ListTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef(),
+            $operation->variables->offsetGet('varName')->type->innerRef,
         );
-        self::assertSame('Bool', $operation->getVariables()->offsetGet('varName')->getType()->getInnerRef()->getName());
-        self::assertSame([true, false], $operation->getVariables()->offsetGet('varName')->getDefault()->getRawValue());
-        self::assertCount(0, $operation->getVariables()->offsetGet('varName')->getDirectives());
+        self::assertSame('Bool', $operation->variables->offsetGet('varName')->type->innerRef->name);
+        self::assertSame([true, false], $operation->variables->offsetGet('varName')->default->getRawValue());
+        self::assertCount(0, $operation->variables->offsetGet('varName')->directives);
     }
 
     public function testVariableDefaultObject() : void
     {
         $result = Parser::parseString('query queryName ($varName: InputType = {fieldName: null, fieldName2: {}}) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('InputType', $operation->getVariables()->offsetGet('varName')->getType()->getName());
+        self::assertSame('InputType', $operation->variables->offsetGet('varName')->type->name);
         self::assertEquals(
             (object) [
                 'fieldName' => null,
                 'fieldName2' => (object) [],
             ],
-            $operation->getVariables()->offsetGet('varName')->getDefault()->getRawValue(),
+            $operation->variables->offsetGet('varName')->default->getRawValue(),
         );
-        self::assertCount(0, $operation->getVariables()->offsetGet('varName')->getDirectives());
+        self::assertCount(0, $operation->variables->offsetGet('varName')->directives);
     }
 
     public function testVariableDefaultEnum() : void
     {
         $result = Parser::parseString('query queryName ($varName: EnumType = ENUM_VALUE) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('EnumType', $operation->getVariables()->offsetGet('varName')->getType()->getName());
+        self::assertSame('EnumType', $operation->variables->offsetGet('varName')->type->name);
         self::assertEquals(
             'ENUM_VALUE',
-            $operation->getVariables()->offsetGet('varName')->getDefault()->getRawValue(),
+            $operation->variables->offsetGet('varName')->default->getRawValue(),
         );
-        self::assertCount(0, $operation->getVariables()->offsetGet('varName')->getDirectives());
+        self::assertCount(0, $operation->variables->offsetGet('varName')->directives);
     }
 
     public function testVariableDirectives() : void
     {
         $result = Parser::parseString('query queryName ($varName: Int @abc) { field }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(1, $operation->getVariables());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertCount(1, $operation->children);
+        self::assertCount(1, $operation->variables);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Int', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertCount(1, $operation->getVariables()->offsetGet('varName')->getDirectives());
-        self::assertSame('abc', $operation->getVariables()->offsetGet('varName')->getDirectives()->offsetGet(0)->getName());
+        self::assertSame('Int', $operation->variables->offsetGet('varName')->type->name);
+        self::assertCount(1, $operation->variables->offsetGet('varName')->directives);
+        self::assertSame('abc', $operation->variables->offsetGet('varName')->directives->offsetGet(0)->name);
     }
 
     public function testVariableUsage() : void
     {
         $result = Parser::parseString('query queryName ($varName: Int) { field(arg: $varName) }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertSame('queryName', $operation->getName());
-        self::assertCount(1, $operation->getFields());
-        self::assertSame('field', $operation->getFields()->offsetGet(0)->getName());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertSame('arg', $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('arg')->getName());
+        self::assertSame('queryName', $operation->name);
+        self::assertCount(1, $operation->children);
+        self::assertSame('field', $operation->children->offsetGet(0)->name);
+        self::assertCount(1, $operation->children->offsetGet(0)->arguments);
+        self::assertSame('arg', $operation->children->offsetGet(0)->arguments->offsetGet('arg')->name);
         self::assertInstanceOf(
             VariableRef::class,
-            $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('arg')->getValue(),
+            $operation->children->offsetGet(0)->arguments->offsetGet('arg')->value,
         );
-        self::assertSame('varName', $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('arg')->getValue()->getVarName());
-        self::assertCount(1, $operation->getVariables());
-        self::assertCount(0, $operation->getDirectives());
-        self::assertArrayHasKey('varName', $operation->getVariables());
-        self::assertSame('varName', $operation->getVariables()->offsetGet('varName')->getName());
+        self::assertSame('varName', $operation->children->offsetGet(0)->arguments->offsetGet('arg')->value->varName);
+        self::assertCount(1, $operation->variables);
+        self::assertCount(0, $operation->directives);
+        self::assertArrayHasKey('varName', $operation->variables);
+        self::assertSame('varName', $operation->variables->offsetGet('varName')->name);
         self::assertInstanceOf(
             NamedTypeRef::class,
-            $operation->getVariables()->offsetGet('varName')->getType(),
+            $operation->variables->offsetGet('varName')->type,
         );
-        self::assertSame('Int', $operation->getVariables()->offsetGet('varName')->getType()->getName());
-        self::assertNull($operation->getVariables()->offsetGet('varName')->getDefault());
+        self::assertSame('Int', $operation->variables->offsetGet('varName')->type->name);
+        self::assertNull($operation->variables->offsetGet('varName')->default);
     }
 
     public function testField() : void
     {
         $result = Parser::parseString('query queryName { fieldName }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(0, $operation->getVariables());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getAlias());
-        self::assertNull($operation->getFields()->offsetGet(0)->getArguments());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields());
+        self::assertCount(1, $operation->children);
+        self::assertCount(0, $operation->variables);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->alias);
+        self::assertNull($operation->children->offsetGet(0)->arguments);
+        self::assertNull($operation->children->offsetGet(0)->children);
     }
 
     public function testFieldArguments() : void
     {
         $result = Parser::parseString('query queryName { fieldName(argName: "argVal") }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertArrayHasKey('argName', $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertSame('argVal', $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('argName')->getValue()->getRawValue());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields());
+        self::assertCount(1, $operation->children->offsetGet(0)->arguments);
+        self::assertArrayHasKey('argName', $operation->children->offsetGet(0)->arguments);
+        self::assertSame('argVal', $operation->children->offsetGet(0)->arguments->offsetGet('argName')->value->getRawValue());
+        self::assertNull($operation->children->offsetGet(0)->children);
     }
 
     public function testFieldArgumentsKeywordName() : void
     {
         $result = Parser::parseString('query queryName { type(input: "argVal") }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('type', $operation->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('type', $operation->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertArrayHasKey('input', $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertSame('argVal', $operation->getFields()->offsetGet(0)->getArguments()->offsetGet('input')->getValue()->getRawValue());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields());
+        self::assertCount(1, $operation->children->offsetGet(0)->arguments);
+        self::assertArrayHasKey('input', $operation->children->offsetGet(0)->arguments);
+        self::assertSame('argVal', $operation->children->offsetGet(0)->arguments->offsetGet('input')->value->getRawValue());
+        self::assertNull($operation->children->offsetGet(0)->children);
     }
 
     public function testFieldSubfield() : void
     {
         $result = Parser::parseString('query queryName { fieldName { innerField } }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getAlias());
-        self::assertNull($operation->getFields()->offsetGet(0)->getArguments());
-        self::assertInstanceOf(FieldSet::class, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertArrayHasKey(0, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertSame('innerField', $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getAlias());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments());
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->alias);
+        self::assertNull($operation->children->offsetGet(0)->arguments);
+        self::assertInstanceOf(FieldSet::class, $operation->children->offsetGet(0)->children);
+        self::assertCount(1, $operation->children->offsetGet(0)->children);
+        self::assertArrayHasKey(0, $operation->children->offsetGet(0)->children);
+        self::assertSame('innerField', $operation->children->offsetGet(0)->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->children->offsetGet(0)->alias);
+        self::assertNull($operation->children->offsetGet(0)->children->offsetGet(0)->arguments);
     }
 
     public function testFieldAlias() : void
     {
         $result = Parser::parseString('query queryName { aliasName: fieldName }');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(1, $operation->getFields());
-        self::assertCount(0, $operation->getVariables());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertSame('aliasName', $operation->getFields()->offsetGet(0)->getAlias());
-        self::assertNull($operation->getFields()->offsetGet(0)->getArguments());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields());
+        self::assertCount(1, $operation->children);
+        self::assertCount(0, $operation->variables);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertSame('aliasName', $operation->children->offsetGet(0)->alias);
+        self::assertNull($operation->children->offsetGet(0)->arguments);
+        self::assertNull($operation->children->offsetGet(0)->children);
     }
 
     public function testFieldAll() : void
@@ -715,32 +715,32 @@ final class ParserTest extends TestCase
             'query queryName { aliasName: fieldName(argName: "argVal") { innerField(argName: 12.34) }}',
         );
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(1, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(1, $result->operations);
 
-        $operation = $result->getOperations()->current();
+        $operation = $result->operations->current();
 
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertSame('aliasName', $operation->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertSame('aliasName', $operation->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertArrayHasKey('argName', $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertInstanceOf(FieldSet::class, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertArrayHasKey(0, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertSame('innerField', $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(1, $operation->children->offsetGet(0)->arguments);
+        self::assertArrayHasKey('argName', $operation->children->offsetGet(0)->arguments);
+        self::assertInstanceOf(FieldSet::class, $operation->children->offsetGet(0)->children);
+        self::assertCount(1, $operation->children->offsetGet(0)->children);
+        self::assertArrayHasKey(0, $operation->children->offsetGet(0)->children);
+        self::assertSame('innerField', $operation->children->offsetGet(0)->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments());
+        self::assertCount(1, $operation->children->offsetGet(0)->children->offsetGet(0)->arguments);
     }
 
     public function testMultipleOperations() : void
@@ -751,32 +751,32 @@ final class ParserTest extends TestCase
             query lastQuery { fieldName(argName: "argVal3") { innerField(argName: 12.36) }}
         ');
 
-        self::assertCount(0, $result->getFragments());
-        self::assertCount(3, $result->getOperations());
+        self::assertCount(0, $result->fragments);
+        self::assertCount(3, $result->operations);
 
-        $operation = $result->getOperations()['queryName'];
+        $operation = $result->operations['queryName'];
 
-        self::assertCount(0, $operation->getVariables());
-        self::assertCount(1, $operation->getFields());
-        self::assertArrayHasKey(0, $operation->getFields());
-        self::assertSame('fieldName', $operation->getFields()->offsetGet(0)->getName());
-        self::assertSame('aliasName', $operation->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(0, $operation->variables);
+        self::assertCount(1, $operation->children);
+        self::assertArrayHasKey(0, $operation->children);
+        self::assertSame('fieldName', $operation->children->offsetGet(0)->name);
+        self::assertSame('aliasName', $operation->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertArrayHasKey('argName', $operation->getFields()->offsetGet(0)->getArguments());
-        self::assertInstanceOf(FieldSet::class, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertArrayHasKey(0, $operation->getFields()->offsetGet(0)->getFields());
-        self::assertSame('innerField', $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getName());
-        self::assertNull($operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getAlias());
+        self::assertCount(1, $operation->children->offsetGet(0)->arguments);
+        self::assertArrayHasKey('argName', $operation->children->offsetGet(0)->arguments);
+        self::assertInstanceOf(FieldSet::class, $operation->children->offsetGet(0)->children);
+        self::assertCount(1, $operation->children->offsetGet(0)->children);
+        self::assertArrayHasKey(0, $operation->children->offsetGet(0)->children);
+        self::assertSame('innerField', $operation->children->offsetGet(0)->children->offsetGet(0)->name);
+        self::assertNull($operation->children->offsetGet(0)->children->offsetGet(0)->alias);
         self::assertInstanceOf(
             ArgumentValueSet::class,
-            $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments(),
+            $operation->children->offsetGet(0)->children->offsetGet(0)->arguments,
         );
-        self::assertCount(1, $operation->getFields()->offsetGet(0)->getFields()->offsetGet(0)->getArguments());
+        self::assertCount(1, $operation->children->offsetGet(0)->children->offsetGet(0)->arguments);
     }
 
     public static function invalidDataProvider() : array

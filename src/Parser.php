@@ -101,14 +101,14 @@ final class Parser
                     // fragment keyword
                     if ($this->tokenizer->getCurrent()->getValue() === TokenType::FRAGMENT->value) {
                         $fragment = $this->parseFragmentDefinition();
-                        $fragments[$fragment->getName()] = $fragment;
+                        $fragments[$fragment->name] = $fragment;
 
                         break;
                     }
 
                     // operation keyword
                     $operation = $this->parseOperation();
-                    $operationName = $operation->getName();
+                    $operationName = $operation->name;
 
                     if (\is_string($operationName) && \in_array($operationName, $operationNames, true)) {
                         throw new DuplicateOperation($location);
@@ -184,9 +184,6 @@ final class Parser
     {
         return new Operation(
             OperationType::QUERY,
-            null,
-            new VariableSet(),
-            new DirectiveSet(),
             $this->parseSelectionSet(),
         );
     }
@@ -215,14 +212,14 @@ final class Parser
             $this->tokenizer->getNext();
         }
 
-        $variables = null;
+        $variables = new VariableSet();
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::PAR_O) {
             $variables = $this->parseVariables();
             $this->tokenizer->getNext();
         }
 
-        $directives = null;
+        $directives = new DirectiveSet();
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::DIRECTIVE) {
             $this->tokenizer->getPrev();
@@ -233,10 +230,10 @@ final class Parser
         if ($this->tokenizer->getCurrent()->getType() === TokenType::CUR_O) {
             return new Operation(
                 $operationType,
+                $this->parseSelectionSet(),
                 $operationName,
                 $variables,
                 $directives,
-                $this->parseSelectionSet(),
             );
         }
 

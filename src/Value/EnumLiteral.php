@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class EnumLiteral implements Value
+final readonly class EnumLiteral implements Value
 {
     public function __construct(
-        private string $value,
+        public string $value,
     )
     {
     }

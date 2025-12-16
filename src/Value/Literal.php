@@ -4,10 +4,10 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class Literal implements Value
+final readonly class Literal implements Value
 {
     public function __construct(
-        private string|int|float|bool|null $value,
+        public string|int|float|bool|null $value,
     )
     {
     }

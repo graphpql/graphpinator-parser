@@ -6,26 +6,16 @@ namespace Graphpinator\Parser\FragmentSpread;
 
 use Graphpinator\Parser\Directive\DirectiveSet;
 
-final class NamedFragmentSpread implements FragmentSpread
+final readonly class NamedFragmentSpread implements FragmentSpread
 {
-    private DirectiveSet $directives;
+    public readonly DirectiveSet $directives;
 
     public function __construct(
-        private string $name,
+        public string $name,
         ?DirectiveSet $directives = null,
     )
     {
         $this->directives = $directives
             ?? new DirectiveSet();
-    }
-
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
-    public function getDirectives() : DirectiveSet
-    {
-        return $this->directives;
     }
 }

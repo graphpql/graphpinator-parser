@@ -9,47 +9,15 @@ use Graphpinator\Parser\Field\FieldSet;
 use Graphpinator\Parser\OperationType;
 use Graphpinator\Parser\Variable\VariableSet;
 
-final class Operation
+final readonly class Operation
 {
-    private VariableSet $variables;
-    private DirectiveSet $directives;
-
     public function __construct(
-        private OperationType $type,
-        private ?string $name,
-        ?VariableSet $variables,
-        ?DirectiveSet $directives,
-        private FieldSet $children,
+        public OperationType $type,
+        public FieldSet $children,
+        public ?string $name = null,
+        public VariableSet $variables = new VariableSet(),
+        public DirectiveSet $directives = new DirectiveSet(),
     )
     {
-        $this->variables = $variables
-            ?? new VariableSet();
-        $this->directives = $directives
-            ?? new DirectiveSet();
-    }
-
-    public function getType() : OperationType
-    {
-        return $this->type;
-    }
-
-    public function getName() : ?string
-    {
-        return $this->name;
-    }
-
-    public function getFields() : FieldSet
-    {
-        return $this->children;
-    }
-
-    public function getVariables() : VariableSet
-    {
-        return $this->variables;
-    }
-
-    public function getDirectives() : DirectiveSet
-    {
-        return $this->directives;
     }
 }

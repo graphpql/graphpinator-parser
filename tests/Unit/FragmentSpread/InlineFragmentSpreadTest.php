@@ -16,7 +16,7 @@ final class InlineFragmentSpreadTest extends TestCase
         $val = new InlineFragmentSpread(
             new FieldSet([], new FragmentSpreadSet()),
         );
-        self::assertCount(0, $val->getFields());
-        self::assertCount(0, $val->getDirectives());
+        self::assertCount(0, $val->fields);
+        self::assertCount(0, $val->directives);
     }
 }

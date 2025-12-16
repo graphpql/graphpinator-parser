@@ -4,17 +4,12 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\TypeRef;
 
-final class NamedTypeRef implements TypeRef
+final readonly class NamedTypeRef implements TypeRef
 {
     public function __construct(
-        private string $name,
+        public string $name,
     )
     {
-    }
-
-    public function getName() : string
-    {
-        return $this->name;
     }
 
     #[\Override]

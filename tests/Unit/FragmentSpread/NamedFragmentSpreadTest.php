@@ -12,7 +12,7 @@ final class NamedFragmentSpreadTest extends TestCase
     public function testConstructor() : void
     {
         $val = new NamedFragmentSpread('fragment');
-        self::assertSame('fragment', $val->getName());
-        self::assertCount(0, $val->getDirectives());
+        self::assertSame('fragment', $val->name);
+        self::assertCount(0, $val->directives);
     }
 }

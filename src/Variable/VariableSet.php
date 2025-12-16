@@ -17,6 +17,6 @@ final class VariableSet extends ImplicitObjectMap
     #[\Override]
     protected function getKey(object $object) : string
     {
-        return $object->getName(); // @phpstan-ignore method.notFound
+        return $object->name; // @phpstan-ignore property.notFound
     }
 }

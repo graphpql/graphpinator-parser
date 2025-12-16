@@ -6,22 +6,12 @@ namespace Graphpinator\Parser\Directive;
 
 use Graphpinator\Parser\Value\ArgumentValueSet;
 
-final class Directive
+final readonly class Directive
 {
     public function __construct(
-        private string $name,
-        private ?ArgumentValueSet $arguments,
+        public string $name,
+        public ?ArgumentValueSet $arguments,
     )
     {
-    }
-
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
-    public function getArguments() : ?ArgumentValueSet
-    {
-        return $this->arguments;
     }
 }

@@ -4,21 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class ListVal implements Value
+final readonly class ListVal implements Value
 {
     public function __construct(
         /** @var list<Value> */
-        private array $value,
+        public array $value,
     )
     {
-    }
-
-    /**
-     * @return list<Value>
-     */
-    public function getValue() : array
-    {
-        return $this->value;
     }
 
     /**

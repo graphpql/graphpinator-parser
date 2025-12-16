@@ -8,34 +8,14 @@ use Graphpinator\Parser\Directive\DirectiveSet;
 use Graphpinator\Parser\TypeRef\TypeRef;
 use Graphpinator\Parser\Value\Value;
 
-final class Variable
+final readonly class Variable
 {
     public function __construct(
-        private string $name,
-        private TypeRef $type,
-        private ?Value $default,
-        private DirectiveSet $directives,
+        public string $name,
+        public TypeRef $type,
+        public ?Value $default,
+        public DirectiveSet $directives,
     )
     {
-    }
-
-    public function getName() : string
-    {
-        return $this->name;
-    }
-
-    public function getType() : TypeRef
-    {
-        return $this->type;
-    }
-
-    public function getDefault() : ?Value
-    {
-        return $this->default;
-    }
-
-    public function getDirectives() : DirectiveSet
-    {
-        return $this->directives;
     }
 }
