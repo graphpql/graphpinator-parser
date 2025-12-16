@@ -4,13 +4,17 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Variable;
 
+use Graphpinator\Parser\Directive\DirectiveSet;
+use Graphpinator\Parser\TypeRef\TypeRef;
+use Graphpinator\Parser\Value\Value;
+
 final class Variable
 {
     public function __construct(
         private string $name,
-        private \Graphpinator\Parser\TypeRef\TypeRef $type,
-        private ?\Graphpinator\Parser\Value\Value $default,
-        private \Graphpinator\Parser\Directive\DirectiveSet $directives,
+        private TypeRef $type,
+        private ?Value $default,
+        private DirectiveSet $directives,
     )
     {
     }
@@ -20,17 +24,17 @@ final class Variable
         return $this->name;
     }
 
-    public function getType() : \Graphpinator\Parser\TypeRef\TypeRef
+    public function getType() : TypeRef
     {
         return $this->type;
     }
 
-    public function getDefault() : ?\Graphpinator\Parser\Value\Value
+    public function getDefault() : ?Value
     {
         return $this->default;
     }
 
-    public function getDirectives() : \Graphpinator\Parser\Directive\DirectiveSet
+    public function getDirectives() : DirectiveSet
     {
         return $this->directives;
     }

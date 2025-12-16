@@ -4,13 +4,17 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Fragment;
 
+use Graphpinator\Parser\Directive\DirectiveSet;
+use Graphpinator\Parser\Field\FieldSet;
+use Graphpinator\Parser\TypeRef\NamedTypeRef;
+
 final class Fragment
 {
     public function __construct(
         private string $name,
-        private \Graphpinator\Parser\TypeRef\NamedTypeRef $typeCond,
-        private \Graphpinator\Parser\Directive\DirectiveSet $directives,
-        private \Graphpinator\Parser\Field\FieldSet $fields,
+        private NamedTypeRef $typeCond,
+        private DirectiveSet $directives,
+        private FieldSet $fields,
     )
     {
     }
@@ -20,17 +24,17 @@ final class Fragment
         return $this->name;
     }
 
-    public function getFields() : \Graphpinator\Parser\Field\FieldSet
+    public function getFields() : FieldSet
     {
         return $this->fields;
     }
 
-    public function getTypeCond() : \Graphpinator\Parser\TypeRef\NamedTypeRef
+    public function getTypeCond() : NamedTypeRef
     {
         return $this->typeCond;
     }
 
-    public function getDirectives() : \Graphpinator\Parser\Directive\DirectiveSet
+    public function getDirectives() : DirectiveSet
     {
         return $this->directives;
     }

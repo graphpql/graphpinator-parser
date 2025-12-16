@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Operation;
 
+use Infinityloop\Utils\ImplicitObjectMap;
+
 /**
- * @method \Graphpinator\Parser\Operation\Operation current() : object
- * @method \Graphpinator\Parser\Operation\Operation offsetGet($offset) : object
+ * @method Operation current() : object
+ * @method Operation offsetGet($offset) : object
  */
-final class OperationSet extends \Infinityloop\Utils\ImplicitObjectMap
+final class OperationSet extends ImplicitObjectMap
 {
     protected const INNER_CLASS = Operation::class;
 

@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class VariableRef implements \Graphpinator\Parser\Value\Value
+final class VariableRef implements Value
 {
     public function __construct(
         private string $varName,

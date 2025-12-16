@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class EnumLiteral implements \Graphpinator\Parser\Value\Value
+final class EnumLiteral implements Value
 {
     public function __construct(
         private string $value,

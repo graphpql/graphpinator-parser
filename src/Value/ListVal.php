@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
-final class ListVal implements \Graphpinator\Parser\Value\Value
+final class ListVal implements Value
 {
     public function __construct(
         private array $value,

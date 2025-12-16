@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Directive;
 
+use Graphpinator\Parser\Value\ArgumentValueSet;
+
 final class Directive
 {
     public function __construct(
         private string $name,
-        private ?\Graphpinator\Parser\Value\ArgumentValueSet $arguments,
+        private ?ArgumentValueSet $arguments,
     )
     {
     }
@@ -18,7 +20,7 @@ final class Directive
         return $this->name;
     }
 
-    public function getArguments() : ?\Graphpinator\Parser\Value\ArgumentValueSet
+    public function getArguments() : ?ArgumentValueSet
     {
         return $this->arguments;
     }

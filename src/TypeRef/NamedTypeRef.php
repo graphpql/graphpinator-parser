@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\TypeRef;
 
-final class NamedTypeRef implements \Graphpinator\Parser\TypeRef\TypeRef
+final class NamedTypeRef implements TypeRef
 {
     public function __construct(
         private string $name,

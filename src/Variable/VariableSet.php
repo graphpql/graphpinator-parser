@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Variable;
 
+use Infinityloop\Utils\ImplicitObjectMap;
+
 /**
- * @method \Graphpinator\Parser\Variable\Variable current() : object
- * @method \Graphpinator\Parser\Variable\Variable offsetGet($offset) : object
+ * @method Variable current() : object
+ * @method Variable offsetGet($offset) : object
  */
-final class VariableSet extends \Infinityloop\Utils\ImplicitObjectMap
+final class VariableSet extends ImplicitObjectMap
 {
     protected const INNER_CLASS = Variable::class;
 

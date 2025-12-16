@@ -4,27 +4,33 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Tests\Unit\Value;
 
-final class NamedValueTest extends \PHPUnit\Framework\TestCase
+use Graphpinator\Parser\Value\ArgumentValue;
+use Graphpinator\Parser\Value\ListVal;
+use Graphpinator\Parser\Value\Literal;
+use Graphpinator\Parser\Value\Value;
+use PHPUnit\Framework\TestCase;
+
+final class NamedValueTest extends TestCase
 {
     public static function simpleDataProvider() : array
     {
         return [
-            [new \Graphpinator\Parser\Value\Literal(123), 'name'],
-            [new \Graphpinator\Parser\Value\Literal(123.123), 'name'],
-            [new \Graphpinator\Parser\Value\Literal('123'), 'name'],
-            [new \Graphpinator\Parser\Value\Literal(true), 'name'],
-            [new \Graphpinator\Parser\Value\ListVal([]), 'name'],
+            [new Literal(123), 'name'],
+            [new Literal(123.123), 'name'],
+            [new Literal('123'), 'name'],
+            [new Literal(true), 'name'],
+            [new ListVal([]), 'name'],
         ];
     }
 
     /**
      * @dataProvider simpleDataProvider
-     * @param \Graphpinator\Parser\Value\Value $value
+     * @param Value $value
      * @param string $name
      */
-    public function testSimple(\Graphpinator\Parser\Value\Value $value, string $name) : void
+    public function testSimple(Value $value, string $name) : void
     {
-        $obj = new \Graphpinator\Parser\Value\ArgumentValue($value, $name);
+        $obj = new ArgumentValue($value, $name);
 
         self::assertSame($name, $obj->getName());
         self::assertSame($value, $obj->getValue());

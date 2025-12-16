@@ -4,21 +4,24 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser;
 
+use Graphpinator\Parser\Fragment\FragmentSet;
+use Graphpinator\Parser\Operation\OperationSet;
+
 final class ParsedRequest
 {
     public function __construct(
-        private \Graphpinator\Parser\Operation\OperationSet $operations,
-        private \Graphpinator\Parser\Fragment\FragmentSet $fragments,
+        private OperationSet $operations,
+        private FragmentSet $fragments,
     )
     {
     }
 
-    public function getOperations() : \Graphpinator\Parser\Operation\OperationSet
+    public function getOperations() : OperationSet
     {
         return $this->operations;
     }
 
-    public function getFragments() : \Graphpinator\Parser\Fragment\FragmentSet
+    public function getFragments() : FragmentSet
     {
         return $this->fragments;
     }

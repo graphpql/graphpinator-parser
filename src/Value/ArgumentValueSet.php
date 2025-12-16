@@ -4,13 +4,15 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Value;
 
+use Infinityloop\Utils\ImplicitObjectMap;
+
 /**
- * @method \Graphpinator\Parser\Value\ArgumentValue current() : object
- * @method \Graphpinator\Parser\Value\ArgumentValue offsetGet($offset) : object
+ * @method ArgumentValue current() : object
+ * @method ArgumentValue offsetGet($offset) : object
  */
-final class ArgumentValueSet extends \Infinityloop\Utils\ImplicitObjectMap
+final class ArgumentValueSet extends ImplicitObjectMap
 {
-    protected const INNER_CLASS = \Graphpinator\Parser\Value\ArgumentValue::class;
+    protected const INNER_CLASS = ArgumentValue::class;
 
     protected function getKey(object $object) : string
     {

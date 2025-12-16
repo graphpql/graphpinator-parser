@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\FragmentSpread;
 
+use Infinityloop\Utils\ObjectSet;
+
 /**
- * @method \Graphpinator\Parser\FragmentSpread\FragmentSpread current() : object
- * @method \Graphpinator\Parser\FragmentSpread\FragmentSpread offsetGet($offset) : object
+ * @method FragmentSpread current() : object
+ * @method FragmentSpread offsetGet($offset) : object
  */
-final class FragmentSpreadSet extends \Infinityloop\Utils\ObjectSet
+final class FragmentSpreadSet extends ObjectSet
 {
     protected const INNER_CLASS = FragmentSpread::class;
 }

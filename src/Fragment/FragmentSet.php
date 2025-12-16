@@ -4,11 +4,13 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Fragment;
 
+use Infinityloop\Utils\ImplicitObjectMap;
+
 /**
- * @method \Graphpinator\Parser\Fragment\Fragment current() : object
- * @method \Graphpinator\Parser\Fragment\Fragment offsetGet($offset) : object
+ * @method Fragment current() : object
+ * @method Fragment offsetGet($offset) : object
  */
-final class FragmentSet extends \Infinityloop\Utils\ImplicitObjectMap
+final class FragmentSet extends ImplicitObjectMap
 {
     protected const INNER_CLASS = Fragment::class;
 

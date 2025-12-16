@@ -4,23 +4,26 @@ declare(strict_types = 1);
 
 namespace Graphpinator\Parser\Field;
 
+use Graphpinator\Parser\FragmentSpread\FragmentSpreadSet;
+use Infinityloop\Utils\ObjectSet;
+
 /**
- * @method \Graphpinator\Parser\Field\Field current() : object
- * @method \Graphpinator\Parser\Field\Field offsetGet($offset) : object
+ * @method Field current() : object
+ * @method Field offsetGet($offset) : object
  */
-final class FieldSet extends \Infinityloop\Utils\ObjectSet
+final class FieldSet extends ObjectSet
 {
-    protected const INNER_CLASS = \Graphpinator\Parser\Field\Field::class;
+    protected const INNER_CLASS = Field::class;
 
     public function __construct(
         array $fields,
-        private \Graphpinator\Parser\FragmentSpread\FragmentSpreadSet $fragments,
+        private FragmentSpreadSet $fragments,
     )
     {
         parent::__construct($fields);
     }
 
-    public function getFragmentSpreads() : \Graphpinator\Parser\FragmentSpread\FragmentSpreadSet
+    public function getFragmentSpreads() : FragmentSpreadSet
     {
         return $this->fragments;
     }
