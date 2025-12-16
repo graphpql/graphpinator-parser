@@ -167,7 +167,7 @@ final class Parser
         $this->tokenizer->assertNext(TokenType::CUR_O, ExpectedSelectionSet::class);
 
         return new Fragment(
-            $fragmentName,
+            $fragmentName, // @phpstan-ignore argument.type
             $typeCond,
             $directives,
             $this->parseSelectionSet(),
@@ -314,7 +314,13 @@ final class Parser
             $children = $this->parseSelectionSet();
         }
 
-        return new Field($fieldName, $aliasName, $children, $arguments, $directives);
+        return new Field(
+            $fieldName, // @phpstan-ignore argument.type
+            $aliasName,
+            $children,
+            $arguments,
+            $directives,
+        );
     }
 
     /**
@@ -340,7 +346,7 @@ final class Parser
                 }
 
                 return new NamedFragmentSpread(
-                    $this->tokenizer->getCurrent()->getValue(),
+                    $this->tokenizer->getCurrent()->getValue(), // @phpstan-ignore argument.type
                     $this->parseDirectives(),
                 );
             case TokenType::DIRECTIVE:
@@ -390,7 +396,7 @@ final class Parser
             }
 
             $variables[] = new Variable(
-                $name,
+                $name, // @phpstan-ignore argument.type
                 $type,
                 $default,
                 $this->parseDirectives(),
@@ -423,7 +429,10 @@ final class Parser
                 $dirArguments = $this->parseArguments();
             }
 
-            $directives[] = new Directive($dirName, $dirArguments);
+            $directives[] = new Directive(
+                $dirName, // @phpstan-ignore argument.type
+                $dirArguments,
+            );
         }
 
         return new DirectiveSet($directives);
