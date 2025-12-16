@@ -6,6 +6,7 @@ namespace Graphpinator\Parser\Operation;
 
 use Graphpinator\Parser\Directive\DirectiveSet;
 use Graphpinator\Parser\Field\FieldSet;
+use Graphpinator\Parser\OperationType;
 use Graphpinator\Parser\Variable\VariableSet;
 
 final class Operation
@@ -14,7 +15,7 @@ final class Operation
     private DirectiveSet $directives;
 
     public function __construct(
-        private string $type,
+        private OperationType $type,
         private ?string $name,
         ?VariableSet $variables,
         ?DirectiveSet $directives,
@@ -27,7 +28,7 @@ final class Operation
             ?? new DirectiveSet();
     }
 
-    public function getType() : string
+    public function getType() : OperationType
     {
         return $this->type;
     }

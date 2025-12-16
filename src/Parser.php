@@ -91,49 +91,32 @@ final class Parser
             switch ($this->tokenizer->getCurrent()->getType()) {
                 // query shorthand
                 case TokenType::CUR_O:
-                    $operation = new Operation(
-                        TokenType::QUERY->value,
-                        null,
-                        new VariableSet(),
-                        new DirectiveSet(),
-                        $this->parseSelectionSet(),
-                    );
-
-                    $operations[$operation->getName()] = $operation;
+                    $operations[] = $this->parseShorthandOperation();
                     $locations[] = $location;
                     $operationNames[] = null;
 
                     break;
+                // either fragment definition or operation definition
                 case TokenType::NAME:
-                    switch ($this->tokenizer->getCurrent()->getValue()) {
-                        case TokenType::FRAGMENT->value:
-                            $fragment = $this->parseFragmentDefinition();
-                            $fragments[$fragment->getName()] = $fragment;
+                    // fragment keyword
+                    if ($this->tokenizer->getCurrent()->getValue() === TokenType::FRAGMENT->value) {
+                        $fragment = $this->parseFragmentDefinition();
+                        $fragments[$fragment->getName()] = $fragment;
 
-                            break;
-                        case TokenType::QUERY->value:
-                        case TokenType::MUTATION->value:
-                        case TokenType::SUBSCRIPTION->value:
-                            $operationType = $this->tokenizer->getCurrent()->getValue();
-                            $this->tokenizer->getNext();
-
-                            $operation = new Operation(
-                                $operationType,
-                                ...$this->parseAfterOperationType(),
-                            );
-
-                            if (\in_array($operation->getName(), $operationNames, true)) {
-                                throw new DuplicateOperation($location);
-                            }
-
-                            $operations[$operation->getName()] = $operation;
-                            $locations[] = $location;
-                            $operationNames[] = $operation->getName();
-
-                            break;
-                        default:
-                            throw new UnknownOperationType($this->tokenizer->getCurrent()->getLocation());
+                        break;
                     }
+
+                    // operation keyword
+                    $operation = $this->parseOperation();
+                    $operationName = $operation->getName();
+
+                    if (\is_string($operationName) && \in_array($operationName, $operationNames, true)) {
+                        throw new DuplicateOperation($location);
+                    }
+
+                    $operations[] = $operation;
+                    $locations[] = $location;
+                    $operationNames[] = $operationName;
 
                     break;
                 default:
@@ -192,10 +175,39 @@ final class Parser
     }
 
     /**
-     * @return array{0: ?string, 1: ?VariableSet, 2: ?DirectiveSet, 3: FieldSet}
+     * Parses shorthand query operation.
+     *
+     * Expects iterator on previous token = opening brace
+     * Leaves iterator to last used token = closing brace
      */
-    private function parseAfterOperationType() : array
+    private function parseShorthandOperation() : Operation
     {
+        return new Operation(
+            OperationType::QUERY,
+            null,
+            new VariableSet(),
+            new DirectiveSet(),
+            $this->parseSelectionSet(),
+        );
+    }
+
+    /**
+     * Parses operation after a query / mutation / subscription keyword.
+     *
+     * Expects iterator on previous token = operation keyword
+     * Leaves iterator to last used token = closing brace
+     */
+    private function parseOperation() : Operation
+    {
+        $operationType = match ($this->tokenizer->getCurrent()->getValue()) {
+            TokenType::QUERY->value => OperationType::QUERY,
+            TokenType::MUTATION->value => OperationType::MUTATION,
+            TokenType::SUBSCRIPTION->value => OperationType::SUBSCRIPTION,
+            default => throw new UnknownOperationType($this->tokenizer->getCurrent()->getLocation()),
+        };
+
+        $this->tokenizer->getNext();
+
         $operationName = null;
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::NAME) {
@@ -203,17 +215,6 @@ final class Parser
             $this->tokenizer->getNext();
         }
 
-        return [
-            $operationName,
-            ...$this->parseAfterOperationName(),
-        ];
-    }
-
-    /**
-     * @return array{0: ?VariableSet, 1: ?DirectiveSet, 2: FieldSet}
-     */
-    private function parseAfterOperationName() : array
-    {
         $variables = null;
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::PAR_O) {
@@ -221,17 +222,6 @@ final class Parser
             $this->tokenizer->getNext();
         }
 
-        return [
-            $variables,
-            ...$this->parseAfterOperationVariables(),
-        ];
-    }
-
-    /**
-     * @return array{0: ?DirectiveSet, 1: FieldSet}
-     */
-    private function parseAfterOperationVariables() : array
-    {
         $directives = null;
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::DIRECTIVE) {
@@ -241,10 +231,13 @@ final class Parser
         }
 
         if ($this->tokenizer->getCurrent()->getType() === TokenType::CUR_O) {
-            return [
+            return new Operation(
+                $operationType,
+                $operationName,
+                $variables,
                 $directives,
                 $this->parseSelectionSet(),
-            ];
+            );
         }
 
         throw new ExpectedSelectionSet(

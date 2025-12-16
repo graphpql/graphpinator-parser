@@ -28,6 +28,7 @@ use Graphpinator\Parser\Exception\UnknownOperationType;
 use Graphpinator\Parser\Field\FieldSet;
 use Graphpinator\Parser\FragmentSpread\InlineFragmentSpread;
 use Graphpinator\Parser\FragmentSpread\NamedFragmentSpread;
+use Graphpinator\Parser\OperationType;
 use Graphpinator\Parser\Parser;
 use Graphpinator\Parser\TypeRef\ListTypeRef;
 use Graphpinator\Parser\TypeRef\NamedTypeRef;
@@ -49,7 +50,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertSame('queryName', $result->getOperations()->current()->getName());
     }
 
@@ -61,7 +62,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertSame('queryName', $result->getOperations()->current()->getName());
     }
 
@@ -73,7 +74,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('mutation', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::MUTATION, $result->getOperations()->current()->getType());
         self::assertSame('mutName', $result->getOperations()->current()->getName());
     }
 
@@ -85,7 +86,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('subscription', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::SUBSCRIPTION, $result->getOperations()->current()->getType());
         self::assertSame('subName', $result->getOperations()->current()->getName());
     }
 
@@ -97,7 +98,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertNull($result->getOperations()->current()->getName());
     }
 
@@ -109,7 +110,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getOperations());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertNull($result->getOperations()->current()->getName());
     }
 
@@ -174,7 +175,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertSame('queryName', $result->getOperations()->current()->getName());
         self::assertCount(0, $result->getFragments()->offsetGet('fragmentName')->getDirectives());
     }
@@ -192,7 +193,7 @@ final class ParserTest extends TestCase
         self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getFields());
         self::assertCount(0, $result->getOperations()->current()->getVariables());
         self::assertCount(1, $result->getOperations()->current()->getFields());
-        self::assertSame('query', $result->getOperations()->current()->getType());
+        self::assertSame(OperationType::QUERY, $result->getOperations()->current()->getType());
         self::assertNull($result->getOperations()->current()->getName());
         self::assertCount(1, $result->getFragments()->offsetGet('fragmentName')->getDirectives());
         self::assertSame('abc', $result->getFragments()->offsetGet('fragmentName')->getDirectives()->offsetGet(0)->getName());
